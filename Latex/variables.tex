@@ -4,9 +4,21 @@
     \usepackage{amsmath}
     \usepackage{amssymb}
     \usepackage{graphicx}
+    \usepackage{xcolor}
+    \usepackage[dvipsnames]{xcolor}
     \usepackage{ulem}
-    \geometry{margin=2cm}
     \usepackage{listings}
+    \usepackage{tikz}
+    \usetikzlibrary{shapes.geometric, arrows}
+    \usepackage{array}
+    
     \let\olditemize\itemize
     \renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
+
+    \tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=3cm, draw=black, fill=orange!30]
+    \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, text width=2cm, draw=black, fill=green!30]
+    \tikzstyle{arrow} = [thick,->,>=stealth]
+    \geometry{left=1cm, right=1cm, top=2cm, bottom=2cm}
 }
+\newcommand{\customfbox}[1]{\vspace{1em}\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{#1}}\vspace{1em}}
+

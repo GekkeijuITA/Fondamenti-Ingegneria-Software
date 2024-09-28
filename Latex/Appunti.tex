@@ -9,4 +9,259 @@
 \customTitlePage{Fondamenti di Ingegneria del Software}{2024-2025}
 \newpage
 \tableofcontents
+\chapter{Modelli di processo di sviluppo software}
+\section{Introduzione}
+\customfbox{\textbf{Processo}: insieme strutturato e organizzato di attività che si svolgono per ottenere un risultato.}
+Perchè modellare il processo? Per dare ordine, controllo e ripetibilità con l'intenzione di migliorare la produttività e la qualità del prodotto.
+\subsection{Processo prescrittivo e adattivo}
+\begin{itemize}
+    \item \textbf{Processo prescrittivo}: un processo che segue un modello predefinito e rigido, con passaggi specifici e ben definiti.
+    \item \textbf{Processo adattivo}: un processo che permette modifiche e adattamenti durante il suo svolgimento.
+\end{itemize}
+Perchè studiare  i modelli di processo? Perchè uno dei compiti dei manager aziendali è quello di decidere il modello di processo da adottare considerando la tipologia del software da progettare e il personale disponibile.
+\section{Modelli di processo}
+\section{Code and Fix}
+\begin{minipage}{0.4\textwidth}
+\begin{itemize}
+    \item Si arriva al codice finale "per tentativi"
+    \item Non adatto per progetti grandi con tanti sviluppatori
+    \item \textcolor{red}{Non è un modello di processo vero e proprio}
+\end{itemize}
+\end{minipage}
+\hspace{0.05\textwidth}
+\begin{minipage}{0.5\textwidth}
+    \begin{tikzpicture}[node distance=2cm]
+        \node (start) [process] {Capire i requisiti};
+        \node (process1) [process, below of = start] {Codifica da zero, esecuzione e test};
+        \node (dec1) [decision, below of = process1, yshift = -1cm] {Passano i test?};
+        \node (process2a) [process, below of = dec1, yshift = -1cm] {Aggiustamento del codice, ri-esecuzione e test};
+        \node (stop) [process, left of = dec1, xshift = -2cm] {Consegna del codice};
+        \draw [arrow] (start) -- (process1);
+        \draw [arrow] (process1) -- (dec1);
+        \draw [arrow] (dec1) -- node[anchor=east] {no} (process2a);
+        \draw [arrow] (dec1) -- node[anchor=south] {si} (stop);
+        \draw [arrow] (process2a.east) -| ++(1,0) |- ([yshift=-0.3cm]process1.south); 
+    \end{tikzpicture}
+\end{minipage}
+\section{Modello a cascata}
+\begin{minipage}{0.5\textwidth}
+\begin{itemize}
+    \item \textcolor{red}{Storicamente il primo modello del processo di sviluppo software}
+    \item Ogni fase produce un prodotto che è l'input della fase successiva
+    \item Con il modello waterfall abbiamo il passaggio dalla dimensione artigianale alla produzione industriale del software
+    \item Molto rigido: non si può tornare indietro
+\end{itemize}
+\end{minipage}
+\hspace{0.05\textwidth}
+\begin{minipage}{0.4\textwidth}
+    \includegraphics[width=\linewidth]{Immagini/waterfall.png}
+\end{minipage}
+\begin{center}
+
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+    \hline
+    \textbf{\textcolor{Green}{Vantaggi}} & \textbf{\textcolor{red}{Svantaggi}} \\
+    \hline
+    Enfasi su aspetti come l'analisi dei requisiti e il progetto di sistema trascurati nell'approccio code \& fix & Lineare, rigido, monolitico: no feedback tra fasi, no parallelismo, \textcolor{red}{unica data di consegna} \\
+    \hline
+    Pospone l'implementazione dopo avere capito i bisogni del cliente & La consegna avviene dopo anni, intanto i requisiti cambiano o si chiariscono: così viene consegnato software obsoleto \\
+    \hline
+    Introduce disciplina e pianificazione & Viene prodotta troppa documentazione poco chiara: l'utente spesso non conosce tutti i requisiti all'inizio dello sviluppo \\
+    \hline
+    E' applicabile se i requisiti sono chiari e stabili & Alcuni difetti superati da modello waterfall con feedback e iterazioni \\
+    \hline
+\end{tabular}
+\end{center}
+\subsection{Studio di fattibilità}
+\begin{itemize}
+    \item Fase che precede lo sviluppo vero e proprio
+    \item Viene analizzata la fattiblità e convenienza del progetto
+    \item Stima dei costi
+    \item Si valuta il Return Of Investment (ROI)
+\end{itemize}
+\subsection{Varianti del modello a cascata}
+\begin{itemize}
+    \item Cascata con prototipazione: prima di iniziare lo sviluppo si costruisce un prototipo "usa e getta" con il solo scopo di fornire agli utenti una base concreta per meglio definire i requisiti.
+    \item Cascata con feedback e iterazioni: posso tornare a una fase precedente. \begin{center}
+        \includegraphics[width=0.8\linewidth]{Immagini/waterfallfeedback.png}
+    \end{center}
+    \item V-Model: \begin{itemize}
+        \item Enfasi sulle fasi di testing
+        \item Evidenzia come le attività di testing (parte destra della V) sono collegate a quelle di analisi e progettazione (parte sinistra della V)
+        \item Ogni controllo fatto a destra che non dia buon esito porta a un rifacimento/modifica di quanto fatto a sinistra
+        \item \textbf{Parallelismo}: creazione dei test e una volta che ho il codice li eseguo
+        \item \textcolor{red}{Problemi (anche per Waterfall)}: \begin{itemize}
+            \item Versione funzionante solo alla fine!
+            \item Errore in fase iniziale può avere conseguenze disastrose
+        \end{itemize}
+    \end{itemize}
+    \begin{center}
+        \includegraphics[width=0.5\linewidth]{Immagini/vmodel.png}
+    \end{center}
+\end{itemize}
+\section{Modelli evolutivi}
+\customfbox{Idea: sviluppare un implementazione iniziale, esporla agli utenti e raffinarla attraverso successivi rilasci del SW (release)}
+Sottocategorie:
+\begin{itemize}
+    \item Prototyping
+    \item Modelli incrementali
+    \item Modelli iterativi
+\end{itemize}
+\subsection{Modelli a Prototyping}
+\begin{itemize}
+    \item Realizzazione di un prototipo funzionante del sistema, su cui validare i requisiti (o l'architettura)
+    \item Il prototipo ha meno funzionalità ed è meno efficiente
+\end{itemize}
+\begin{center}
+    \begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+        \hline
+        \textbf{\textcolor{Green}{Vantaggi}} & \textbf{\textcolor{red}{Svantaggi}} \\
+        \hline
+        Permette di raffinare requisiti definiti in termini di obiettivi generali e troppo vaghi & Il prototipo è un meccanismo per identificare i requisiti, spesso da "buttare": problema economico e psicologico, il rischio è di non farlo e così scelte non ideali diventano parte integrante del sistema \\
+        \hline
+        Rilevazione precoce di errori di interpretazione & \\
+        \hline
+    \end{tabular}
+\end{center}
+\subsection{Modelli Iterativi-Incrementali}
+\begin{itemize}
+    \item Sviluppo di varie release,  di cui solo l'ultima è completa
+    \item Dopo la prima release, si procede in parallelo
+    \item Le fasi di sviluppo vengono percorse più volte
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.5\linewidth]{Immagini/iterativoincrementale.png}
+\end{center}
+\subsubsection{Modelli Incrementali}
+\begin{itemize}
+    \item Ogni release aggiunge nuove funzionalità
+    \item Nella fase di pianificazione si decide il requisito/funzionalità da includere nella release successiva.
+    \item Si trattano per prime le funzionalità ad alto rischio
+    \item Si cerca di massimizzare il valore per gli utenti
+\end{itemize}
+\subsubsection{Modelli Iterativi}
+\begin{itemize}
+    \item Da subito sono presenti tutte (o buona parte) delle funzionalità che sono via via raffinate, migliorate
+\end{itemize}
+\section{Modello a spirale}
+\begin{itemize}
+    \item Sistemi di grandi dimensioni
+    \item Approccio "evolutivo" con interazioni continue fra cliente e developer
+    \item Modello "risk-driver": tutte le scelte sono basate sui risultati dell'analisi dei rischi
+    \item 'Meta-modello': dà un'idea generale ma quando si inizia a lavorare bisogna scegliere un modello esistente \begin{itemize}
+        \item Requisiti chiari e stabili $\rightarrow$ modello a cascata
+        \item Requisiti confusi $\rightarrow$ prototipo
+    \end{itemize}
+\end{itemize}
+\customfbox{\textbf{Rischio}: circostanza potenzialmente avversa in grado di pregiudicare lo sviluppo e la qualità del software}
+\textcolor{red}{Ogni scelta/decisione ha un rischio associato}, due caratteristiche importanti nella valutazione di un rischio sono: \begin{itemize}
+    \item Gravità delle conseguenze
+    \item Probabilità che si verifichi la circostanza
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.7\linewidth]{Immagini/spirale.png}
+\end{center}
+\begin{itemize}
+    \item \textbf{Planning}: determinazione di obbiettivi, alternative, vincoli
+    \item \textbf{Risk Analysis}: analisi delle alternative e identificazione/risoluzione dei rischi
+    \item \textbf{Engineering}: sviluppo del prodotto di successivo livello
+    \item \textbf{Customer Evaluation}: valutazione dei risultati dell'engineering dal punto di vista del cliente
+\end{itemize}
+\begin{center}
+    \begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+        \hline
+        \textbf{\textcolor{Green}{Vantaggi}} & \textbf{\textcolor{red}{Svantaggi}} \\
+        \hline
+        Adatto allo sviluppo di sistemi complessi & Non è un rimedio universale (panacea) \\
+        \hline
+        Primo approccio che considera il rischio (risk-driver) & Necessita competenze di alto livello per la stima dei rischi \\
+        \hline
+        & Richiede  un'opportuna personalizzazione ed esperienza di utilizzo \\
+        \hline
+        & Se un rischio rilevante non viene scoperto o tenuto a bada si inizia da zero \\
+        \hline
+    \end{tabular}
+\end{center}
+\section{Unified Process}
+\begin{itemize}
+    \item Specifico per sistemi ad oggetti, con uso di notazione UML per tutto il processo
+    \item Guidato dagli \textbf{Use Case}
+    \item Incorpora molte delle idee 'buone' dal modello a spirale
+    \item Meta-modello
+    \item Supportato da tool(visuali) in ogni fase
+    \item Processo prescrittivo per eccellenza
+\end{itemize}
+\subsection{Le iterazioni}
+\begin{itemize}
+    \item Possibili diverse iterazioni che terminano con il rilascio del prodotto
+    \item Ogni iterazione consiste di quattro fasi (anche ripetute più volte) che terminano con una milestone (= rilascio di artefatti soggetti a controllo)
+    \item Ogni fase è costituita da diverse attività: \begin{itemize}
+        \item Requisiti (R)
+        \item Analisi (A)
+        \item Design (D)
+        \item Codifica (C)
+        \item Testing (T)
+    \end{itemize}
+\end{itemize}
+\subsection{Le fasi}
+\begin{itemize}
+    \item Inception: studio di fattibilità, requisiti essenziali del sistema, risk analysis
+    \item Elaboration: sviluppa la comprensione del dominio e del problema, gli Use Case della release da rilasciare, l'architettura del sistema
+    \item Construction: Design (in UML), codifica e testing del Sistema
+    \item Transition: Messa in esercizio della release nel suo ambiente (deploy), training e testing da parte di utenti fidati
+\end{itemize}
+\section{Sviluppo basato sui componenti}
+Modello che va nella direzione del \textbf{riutilizzo del software}
+\begin{center}
+    \begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+        \hline
+        \textbf{\textcolor{Green}{Vantaggi}} & \textbf{\textcolor{red}{Svantaggi}} \\
+        \hline
+        Riduce la quantità di software da scrivere & Sono necessari dei compromessi: requisiti iniziali potrebbero differire da quelli che si possono soddisfare con le componenti disponibili \\
+        \hline
+        Riduce i costi totali di sviluppo e i rischi & Integrazione non sempre facile \\
+        \hline
+        Consegne più veloci & Spesso i componenti usati sono fatti evolvere dalla ditta produttrice senza controllo di chi li usa \\
+        \hline
+    \end{tabular}
+\end{center}
+\section{Metodi Plan-Driven e Agili}
+\begin{center}
+    \begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+        \hline
+        \textbf{Plan-Driven} & \textbf{Agile} \\
+        \hline
+        Seguono un approccio classico dell'ingegneria dei sistemi fondato su processi ben definiti e ocn passi standard & Rispondere ai cambiamenti dei requisiti in modo veloce \\
+        \hline
+        & Filosofia del programmare come "arte" piuttosto che processo industriale \\
+        \hline
+        & Cosa più importante soddisfare il cliente e non seguire un piano (contratto)\\
+        \hline
+    \end{tabular}
+\end{center}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Immagini/agilemanifesto.png}
+    \caption{The Agile Manifesto}
+\end{figure}
+\subsection{Come scegliere?}
+\textbf{Metodi plan-driven}: \begin{itemize}
+    \item Sistemi grandi e comploessi, safety-critical o con forti richieste di affidabilità
+    \item Requisiti stabili e ambiente predicibile
+\end{itemize}
+\textbf{Metodi agili}: \begin{itemize}
+    \item Sistemi e team piccoli, clienti e utenti disponibili, ambiente e requisiti volatili
+    \item Team con molta esperienza
+    \item Tempi di consegna rapidi
+\end{itemize}
+\newpage
+\section{DevOps}
+Metodo di sviluppo evolutivo
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\linewidth]{Immagini/devops.png}
+    \caption{DevOps}
+\end{figure}
+\subsection{Continuous Integration}
+La Continuos Integration (CI), o Integrazione Continua, è una pratica di sviluppo software in cui i programmatori integrano frequentemente il proprio lavoro (codice) nel repository condiviso del progetto, in genere diverse volte al giorno.
 \end{document}
