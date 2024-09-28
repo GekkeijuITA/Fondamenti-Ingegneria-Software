@@ -1,0 +1,20 @@
+% Definizione delle variabili
+\newcommand{\imagePath}{Immagini/logoUni.png}
+
+% Definizione del comando per la pagina di titolo con argomenti
+\newcommand{\customTitlePage}[2]{
+    \newcommand{\courseTitle}{#1}
+    \newcommand{\academicYear}{#2}
+    
+    \begin{titlepage}
+        \centering
+        \includegraphics[width=0.5\textwidth]{\imagePath}\par\vspace{1cm}
+        {\scshape\LARGE Università degli Studi di Genova \par}
+        \vspace{1.5cm}
+        {\huge\bfseries \courseTitle \par}
+        \vspace{2cm}
+        {\Large\itshape Lorenzo Vaccarecci \par}
+        \vfill
+        \academicYear
+    \end{titlepage}
+}
