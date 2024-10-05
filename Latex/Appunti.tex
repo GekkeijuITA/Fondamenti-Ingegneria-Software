@@ -264,4 +264,148 @@ Metodo di sviluppo evolutivo
 \end{figure}
 \subsection{Continuous Integration}
 La Continuos Integration (CI), o Integrazione Continua, è una pratica di sviluppo software in cui i programmatori integrano frequentemente il proprio lavoro (codice) nel repository condiviso del progetto, in genere diverse volte al giorno.
+\chapter{Ingegneria dei requisiti}
+\section{Introduzione}
+Descrivere 'qualcosa' che il sistema dovrà fare (una funzionalità) o un vincolo a cui deve sottostare
+\begin{itemize}
+    \item \textbf{Diversi livelli di astrazione}:\begin{itemize}
+        \item Descrizione astratta ed imprecisa del sistema
+        \item Descrizione dettagliata e matematica dello stesso
+    \end{itemize}
+\end{itemize}
+\customfbox{Che cosa il sistema farà e non come!}
+E' importante definire i requisiti in modo da evitare difetti in fasi avanzate del progetto, infatti i difetti dovrebbero essere scoperti il più presto possibile, ovvero a livello dei requisiti.
+\section{Classificazione dei requisiti}
+\begin{itemize}
+    \item \textbf{Requisiti utente}: descrizione in linguaggio naturale delle funzionalità che il sistema dovrà fornire e dei vincoli operativi (\underline{sono scritti per (e con) il cliente})
+    \item \textbf{Requisiti di sistema}: descrive in modo dettagliato le funzionalità che il sistema dovrà fornire (\underline{sono scritti per gli sviluppatori})
+    \item \textbf{Requisiti funzionali}: descrivono ciò che il sistema dovrà fare, non come ma cosa
+    \item \textbf{Requisiti non-funzionali}: definiscono vincoli sul sistema e sullo sviluppo del sistema, in generale riguardano la scelta di linguaggi, piattaaforme, strumenti, tecniche d'implementazione, ma anche: prestazioni, questioni etiche, ...
+\end{itemize}
+Un requisito etico può essere ad esempio che nella realizzazione dell'applicazione verranno utilizzato solo strumenti e servizi 'non proprietari' (es. no Microsoft)
+\subsection{Esempio: Bancomat}
+In \textcolor{red}{rosso} i requisiti funzionali, in \textcolor{blue}{blu} i requisiti non funzionali
+\begin{itemize}
+    \item \textcolor{red}{Il sistema deve mettere a disposizione le funzioni di prelievo, saldo e estratto conto}
+    \item \textcolor{blue}{Il sistema deve essere disponibile a persone portatori di Handicap, deve garantire un tempo di risposta inferiore al minuto, e deve essere sviluppato su architettura X86 con sistema operativo compatibile con quello della Banca}
+    \item \textcolor{red}{Le operazioni di prelievo devono richiedere autenticazione tramite un codice segreto memorizzato sulla carta}
+    \item \textcolor{blue}{Il sistema deve essere facilmente espandibile, e adattabile alle future esigenze bancare}
+\end{itemize}
+\section{Requirements Engineering}
+E' il termine usato per descrivere le attività necessarie per raccogliere, documentare e tenere aggiornato l'insieme dei requisiti di un sistema software.
+\subsection{Scopo}
+Lo scopo primario del RE è la produzione di un documento (il requirement document) che definisca le funzionalità e i servizi offerti dal sistema da realizzare (anche tenerlo aggiornato)
+\subsection{Processo iterativo}
+\begin{center}
+    \includegraphics[width=0.6\textwidth]{Immagini/reiterativo.png}
+\end{center}
+\begin{itemize}
+    \item \textbf{Elicitation}: \begin{itemize}
+        \item Ottenere, estrarre, ricavare, tirar fuori i requisiti dal cliente e da altri partecipanti
+        \item Il primo passo è identificare gli stakeholders\footnote{Stakeholder: persona veramente interessata allo sviluppo del progetto}
+        \item Intervise, osservazioni sul luogo di lavoro, questionari, analisi dei prodotti dei competitors, workshop (brainstorming)
+        \item Studio/analisi di leggi e regolamenti, help-desk reports, 'change requests' di prodotti analoghi, 'lessons learned' in progetti simili, ...
+    \end{itemize}
+    \item \textbf{Analisi dei requisiti}: \begin{itemize}
+        \item I bisogni (user needs) degli stakeholders raccolti durante la fase di elicitation sono analizzati e raffinati
+        \item Si cerca di capire se i requisiti sono corretti
+        \item Si cercano di identificare i "missing requirements"
+        \item Si identificano requisiti poco chiari
+        \item Si risolvono i requisiti "contradditori o in conflitto"
+        \item Viene stabilità la priorità (prioritizzazione): \begin{itemize}
+            \item Per sapere cosa "tagliare" se non tutti potranno essere realizzati
+            \item Scala numerica
+            \item Scala MoSCoW: \begin{itemize}
+                \item \textbf{Must have}: requisiti obbligatori
+                \item \textbf{Should have}: requisiti importanti ma non indispensabili
+                \item \textbf{Could have}: requisiti desiderabili ma non necessari
+            \end{itemize} 
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Definizione e specifica}: \begin{itemize}
+        \item Definizione dei requisiti utente: costituisce un contratto fra le parti
+        \item Specifica dei requisiti di sistema: costituisce "starting point" per la fase di design
+    \end{itemize}
+    \item \textbf{Validazione}: \begin{itemize}
+        \item Esame della definizione/specifica dei requisiti per valutarne la qualità
+        \item Di solito la convalida o validazione si effettua mediante 'formal peer reviewes'
+        \item Scrivere dei casi di test a partire dai requisiti
+        \item Sviluppare un prototipo
+    \end{itemize}
+    \item \textbf{Requirements Management}: \begin{itemize}
+        \item Approvazione di alcune richieste di cambio dei requisiti
+        \item Negoziazione con il cliente
+        \item Impact analysis per i cambi richiesti
+        \item Tenere allineati i requisiti e il codice (e casi di test)
+        \item Tracciare il progresso di un progetto
+    \end{itemize}
+\end{itemize}
+\section{Proprietà dei requisiti}
+\begin{itemize}
+    \item \textbf{Validità-correttezza}
+    \item \textbf{Consistenza}: non ci sono requisiti contradditori
+    \item \textbf{Completezza}: tutti gli aspetti che il cliente vuole sono coperti nei requisiti (in teoria)
+    \item \textbf{Realismo}: non si chiede l'impossibile
+    \item \textbf{Inequivocabilità (Unambiguos)}: ogni requisito dovrebbe avere solo un interpretazione
+    \item \textbf{Verificabilità}: i requisiti vanno espressi in modo che siano testabili
+    \item \textbf{Tracciabilità}: \begin{itemize}
+        \item Ogni funzionalità implementata nel sistema deve poter essere fatta risalire a dei requisiti in modo semplice
+        \item Ogni requisito nella requirement specification deve corrispondere ad uno nella requirement definition
+    \end{itemize}
+\end{itemize}
+\section{Template/Schema dei requisiti}
+Conviene attenersi a questo Schema
+\begin{center}
+    \large
+    \texttt{<id>} il \texttt{<sistema>} deve \texttt{<funzione>}
+\end{center}
+Es. \texttt{R1.}Il sistema deve gestire tutti i regitratori di cassa del negozio (non più di 20)
+\section{Analista software}
+L'analista software o di sistema è la persona che:
+\begin{itemize}
+    \item si occupa dell'elicitazione dei requisiti
+    \item analizza i requisiti
+    \item scrive il documento dei requisiti (definizione e/o specifica)
+    \item Comunica/spiega i requisiti a sviluppatori e altri stakeholder
+\end{itemize}
+Alcune competenze che un analista dovrebbe avere:
+\begin{itemize}
+    \item Arte della negoziazione
+    \item Stabilire una strategia (problem solving)
+    \item Giusta capacità di imporsi
+    \item Ascoltare attentantemente
+    \item Dono della sintesi
+    \item Padronanza del linguaggio naturale
+    \item Buona conoscenza del dominio (ad esempio in ambito medico o automobilistico)
+\end{itemize}
+\subsection{Consigli per un'intervista}
+\begin{enumerate}
+    \item Fare molte domande
+    \item Ascoltare bene
+    \item Mettere in discussione i quantificatori universali: 'tutto, ogni, sempre, ...'
+    \item Annotare tutte le risposte
+\end{enumerate}
+\subsection{Importanza della comunicazione}
+\begin{itemize}
+    \item Elicitation = Attività molto delicata perchè mette in comunicazione due o più persone di realtà anche molto diverse
+    \item Frequenti incomprensioni, che si ripercuotono sulla qualità dei requisiti
+\end{itemize}
+Occore fare molta attenzione a:
+\begin{itemize}
+    \item Diversità di significato che si attribuisce ai termini $\rightarrow$ possibile soluzione definizione del glossario: \begin{itemize}
+        \item Per la spiegazione dei termini tecnici
+        \item Per ridurre l'ambiguità dei termini usati
+        \item Per "espandere" gli acronimi
+    \end{itemize}
+    \item Assunzioni nascoste (Hidden assumptions)
+    \item Verbosità (= sovrabbondanza di parole)
+    \item Mancanza di chiarezza/precisione
+\end{itemize}
+\section{Consigli finali}
+\begin{itemize}
+    \item Riuso di (parte di) requisiti
+    \item Utilizzo di un glossario comune tra clienti, utenti e analisti
+    \item Utilizzo di un 'buon' template/form
+    \item Utilizzo di un software per la geitone/raccolta e analisi dei requisiti
+\end{itemize}
 \end{document}
