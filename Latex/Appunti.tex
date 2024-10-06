@@ -408,4 +408,83 @@ Occore fare molta attenzione a:
     \item Utilizzo di un 'buon' template/form
     \item Utilizzo di un software per la geitone/raccolta e analisi dei requisiti
 \end{itemize}
+\chapter{Definizione dei requisiti basata su use case}
+\section{Cosa sono/servono}
+\begin{itemize}
+    \item Esprimere requisiti funzionali di un sistema
+    \item Descrivere dal punto di vista di chi lo usa un sistema, il sistema è visto come una black-box
+    \item Totalemnte indipendendti dal mondo OO
+    \item Solo testo, formattato in modo standard (template)
+    \item Visuale lo Use Case Diagram (UML)
+    \item Gli use case esprimono l'interazione tra le entità (attori) che interagiscono con il sistema stesso
+\end{itemize}
+\section{Differenza tra requisito e use case}
+\begin{itemize}
+    \item \textbf{Requisito}: descrive una funzionalità dal punto di vista del sistema
+    \item \textbf{Caso d'uso}: descrive una modalità di utilizzo del sistema da parte di un utilizzatore (punto di vista dall'utente)
+\end{itemize}
+La differenza sostanziale è nel modo in cui è presentata l'informazione
+\section{Definizione dei requisiti basata su use case}
+\begin{itemize}
+    \item \textbf{Attore}: rappresenta un ruolo che un entità esterna "recita" interagendo con il sistema, da non confondere un ruolo con la cosa stessa \begin{itemize}
+        \item \textbf{Primari}: chi guadagna qualcosa dal sistema (ad esempio un cliente Amazon)
+        \item \textbf{Secondari}: chi produce qualcosa (o offre un servizio) per il sistema (ad esempio Paypal)
+    \end{itemize}
+    \item \textbf{Use case}: quello che gli attori 'possono fare' con il sistema
+    \item \textbf{Relazioni}: tra gli attori e gli use case
+    \item \textbf{Confini del sistema}: un rettangolo disegnato intorno agli use case per indicare i confini del sistema, quando si vuole costruire un sistema è la prima cosa da fare
+\end{itemize}
+\section{Scenario}
+\customfbox{Uno scenario è una sequenza ordinata di interazioni tra un sistema e gli attori}
+Rappresenta una particolare esecuzione di uno use case (istanza), e rappresenta un singolo cammino dello use case, sono usati per il testing. Si possono avere diversi scenari, ma in tutti l'attore può avere lo stesso scopo.
+\section{Use Case}
+\customfbox{Insieme di scenari che hanno in comune lo scopo finale dell'attore}
+\begin{itemize}
+    \item Gli use case in genere sono dati come testo strutturato
+    \item I passi di uno use case sono testo facile da capire
+    \item Viene usato il vocabolario del dominio dell'applicazione
+    \item Gli use case sono descrizioni chiare, precide, generali e indipendenti dalle tecnologie
+\end{itemize}
+\subsection{Descrivere uno use case}
+\begin{itemize}
+    \item \textbf{Scenario principale}: scenario del mondo perfetto
+    \item \textbf{Scenari secondari}: cosa può succedere di sbagliato o differente e come gestirlo
+\end{itemize}
+\subsection{Template}
+\begin{itemize}
+    \item \textbf{Nome dello use case}: è il goal dello use case \texttt{"breve frase verbale attiva"} in UpperCamelCase
+    \item \textbf{Identificatore}: di solito numerico progressivo
+    \item \textbf{Breve descrizione}: un paragrafo che fissa l'obbiettivo dello use case
+    \item \textbf{Attori primari}: l'attore/gli attori primari dello use case
+    \item \textbf{Attori secondari}: gli attori che "servono" per svolgere lo use case
+    \item \textbf{Precondizioni}: vincoli sullo stato corrente del sistema
+    \item \textbf{Scenario principale}: i passi che costituiscono lo use case
+    \item \textbf{Postcondizioni}: condizioni che devono essere vere quando lo use case termina con successo l'esecuzione dello scenario principale
+    \item \textbf{Scenari alternativi}: un elenco di alternative allo scenario principale
+\end{itemize}
+Uno scenario è costituito da un elenco di passi che devono essere concisi, numerati e ordinati temporalmente: \texttt{<numero> Il <Sistema/Attore> <qualche azione>}. Si ha una deviazione tutte le volte che 'ci si allontana' dallo scenario principale: \begin{itemize}
+    \item \textbf{Semplici}: usare parola chiave \texttt{se} nella sequenza principale
+    \item \textbf{Complesse}: scrivere sequenze degli eventi alternative che rappresentano errori o casi particolari che non ritornano sullo scenario principale
+\end{itemize}
+Si possono usare ripetizioni all'interno di una sequenza: \texttt{per} e \texttt{fintantochè}.\\
+E' possibile che una sequenza venga attivata in qualunque momento della sequenza principale.
+\section{Gerarchia attori}
+\begin{center}
+    \includegraphics[width=0.2\textwidth]{Immagini/attori.png}
+\end{center}
+Come per le classi di Java, l'attore specializzato eredita le relazioni dell'attore generale
+\section{Relazioni tra use case}
+\begin{itemize}
+    \item \textbf{Inclusione \texttt{<<include>>}}: \begin{itemize}
+        \item Assomiglia al concetto di procedura/funzione
+        \item Lo use case "principale" esegue i passi fino al punto di inclusione e passa il controllo allo use case incluso, alla fine il controllo ritorna allo use case principale
+        \item Lo use case principale senza use case incluso risulta incompleto
+    \end{itemize}
+    \item \textbf{Estensione \texttt{<<extend>>}}: per estendere il comportamento di uno use case con un comportamento aggiuntivo (opzionale) rispetto allo use case base
+    \item \textbf{Generalizzazione/specializzazione}: gli use case specializzati (figli) rappresentano delle varianti più specifiche dello use case generalizzato (genitore) da cui ereditano, i 'figli' possono \begin{itemize}
+        \item Ereditare i passi del genitore
+        \item Aggiungere nuovi passi
+        \item Ridefinire (modificare) i pasi ereditati
+    \end{itemize}
+\end{itemize}
 \end{document}
