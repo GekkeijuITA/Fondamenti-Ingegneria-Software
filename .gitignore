@@ -3,5 +3,9 @@
 *.out
 *.toc
 *.synctex.gz
+<<<<<<< Updated upstream
 *.fls
 *.fdb_latexmk
+=======
+/Slides
+>>>>>>> Stashed changes
