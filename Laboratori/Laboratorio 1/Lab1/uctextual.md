@@ -11,6 +11,7 @@ Nessuno
 Nessuna
 ## Sequenza degli eventi principale:
 1. Il cliente seleziona la funzionalità di ricerca
+![Mockup1.png](Mockup1.png)
 2. Il sistema chiede al cliente i criteri di ricerca (ad esempio il titolo del film/serie tv o un genere)
 3. Il cliente inserisce i criteri di ricerca
 4. Il sistema cerca i film/serie tv che soddisfano i criteri di ricerca
