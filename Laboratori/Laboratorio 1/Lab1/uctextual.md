@@ -52,10 +52,11 @@ L'utente non è registrato
     4.2 L'utente effettua il login con le credenziali di Facebook
     4.3 Il sistema crea un account per l'utente con le informazioni di Facebook
 5. Altrimenti inserisce manualmente i dati (nome, cognome, email, password)
+![Mockup2.png](Mockup2.png)   
 6. Il sistema valida i dati inseriti
 7. Il sistema chiede all'utente quale servizio scegliere (gratuito, premium)
 8. L'utente sceglie il servizio
-9. Se l'utente sceglie il servizio premium
+9.  Se l'utente sceglie il servizio premium
 
     9.1 Il sistema chiede all'utente di scegliere il metodo di pagamento (Banca, Paypal)
 
