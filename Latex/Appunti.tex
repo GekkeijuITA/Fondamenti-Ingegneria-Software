@@ -487,4 +487,160 @@ Come per le classi di Java, l'attore specializzato eredita le relazioni dell'att
         \item Ridefinire (modificare) i pasi ereditati
     \end{itemize}
 \end{itemize}
+\chapter{Design architetturale}
+\section{Introduzione}
+\customfbox{Trasforma un problem in una soluzione (come)}
+Il design definisce la struttura della soluzione invece l'implementazione la realizza, rendendola usabile.
+\begin{itemize}
+    \item \textbf{Architectural design (high-level)}: mappa i requisiti su architettura SW e componenti/sottosistemi
+    \item \textbf{Component design (low-level)}: fissa dettagli dei componenti, specificando maggiormente la soluzione
+\end{itemize}
+Scelte tecnologiche:
+\begin{itemize}
+    \item \textbf{platform-independent design}: come pro ha il riuso
+    \item \textbf{platform-specific design}: come pro aiuta i programmatori, per specifico si intende ad esempio nominare già le strutture dati specifiche per un linguaggio.
+\end{itemize}
+\subsection{Livelli di ri-uso}
+\begin{itemize}
+    \item \textbf{Clonazione}: si riutilizza interamente design/codice, con piccoli aggiustamenti
+    \item \textbf{Design pattern}: buona soluzione a problema ricorrente
+    \item \textbf{Stili architetturali}: architettura generica che suggerisce come decomporre il sistema
+    \item \textbf{Software Frameworks}: insieme di classi e interfacce cooperanti che realizzano un design per uno specifico dominio applicativo o tipologia di app
+\end{itemize}
+\section{Design architetturale}
+Processo di design per identificare:
+\begin{itemize}
+    \item le macro componenti di un sistema
+    \item come avviene il controllo e la comunicazione tra componenti
+\end{itemize}
+Produce una descrizione dell'architettura software.
+\section{Componenti}
+\customfbox{Un modulo è un'unità del sistema che offre servizi ad altre unità, ma che non può essere considerato un sistema a se stante}
+Un sottosistema è un sistema di per sè: può essere eseguito ed utilizzato anche "da solo". Di solito i sottosistemi sono composti da moduli ed hanno interfacce ben definite, che sono utilizzate per la comunicazione con altri sottosistemi.
+\section{Diagramma a blocchi}
+Un architettura software è normalmente espressa mediante un diagramma a blocchi che presenta un "overview" della struttura del sistema. I blocchi sono i componenti, i connettori rappresentano le "relazioni" tra i componenti.
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{Immagini/diagrammablocchi.png}
+\end{center}
+\section{Architettura SW}
+\subsection{Proprietà del sistema}
+\begin{itemize}
+    \item \textbf{Performance}: tempi di risposta rapidi
+    \item \textbf{Security}: difficile da "manomettere", dati sensibili protetti
+    \item \textbf{Safety}: non creare "disastri"
+    \item \textbf{Availability}: 24//7/365
+    \item \textbf{Maintainability}: semplice da mantenere/evolvere
+\end{itemize} 
+\subsection{Vantaggi}
+\begin{itemize}
+    \item Guida lo sviluppo ed aiuta nella comprensione del sistema
+    \item Documenta il sistema
+    \item Aiuta a ragionare sull'evoluzione del sistema
+    \item Supporta decisioni manageriali
+    \item Facilita l'analisi di alcune proprietà
+    \item Permette il riuso (Large-scale)
+\end{itemize}
+\subsection{Stili architetturali}
+L'architettura di un sistema può conformarsi a uno stile architetturale
+\begin{itemize}
+    \item \textbf{Modello generico}: con caratteristiche specifiche che può essere istanziato/personalizzato
+    \item \textbf{Layered}
+    \item \textbf{Repository}
+    \item \textbf{Client/server}
+    \item \textbf{P2P}
+    \item \textbf{Broadcast model}
+    \item \textbf{Service Oriented Architecture}
+    \item \textbf{Microservice}
+\end{itemize}
+Uno stile \textbf{strutturale} fornisce solo informazioni strutturali, uno \textbf{di controllo} anche informazioni (o solo) di controllo.\\
+\customfbox{Conoscere gli stili architetturali può semplificare il problema di definire l'architettura software}
+La maggioranze dei grandi sistemi sono \underline{eterogenei} e non seguono un singolo stile architetturale
+\subsubsection{Elementi}
+\begin{itemize}
+    \item \textbf{Componenti}
+    \item \textbf{Connettori}
+\end{itemize}
+\subsection{Layered}
+\begin{itemize}
+    \item Organizza il sistema in un insieme di livelli ognuno dei quali fornisce un insieme di servizi
+    \item Un livello usa solo i servizi del livello inferiore
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{Immagini/layered.png}
+\end{center}
+\subsection{Repository}
+I dati condivisi sono mantenuti in un database centrale (repository o blackboard) a cui hanno accesso tutti i sotto-sistemi
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{Immagini/repository.png}
+\end{center}
+\subsection{Client/server}
+\begin{itemize}
+    \item Modello di sistema distribuito che mostra come i dati e la computazione possono essere distribuiti su: \begin{itemize}
+        \item Insieme di server che forniscono servizi specifici
+        \item Insieme di client che utilizzato tali servizi
+    \end{itemize}
+    \item Esiste una rete che permette ai client di accedere ai server
+\end{itemize}
+\subsubsection{Two-Tier}
+Tre strati/componenti software:
+\begin{itemize}
+    \item Interfaccia utente (presentation logic)
+    \item Gestione dei processi e logica (business o appl. logic)
+    \item Gestione del DB (data logic)
+\end{itemize}
+Distribuiti in due livelli ($n$ client + $m$ server)
+\begin{itemize}
+    \item Client
+    \item Server
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Immagini/thinclientfatclient.png}
+\end{center}
+\subsubsection{Three-Tier}
+\begin{itemize}
+    \item Sul client resta solo l'interfaccia utente
+    \item La logica del sistema risiede sull'Application server e gestisce multi-utenti
+    \item Gli strati di logica e gestione DB sono distribuiti su più DB server
+\end{itemize}
+\subsection{Pipe and Filter}
+\begin{itemize}
+    \item I filtri effettuano trasformazioni che elaborano i loro input per produrre output
+    \item Le pipe sono connettori che trasmettono i dati tra filtro e filtro
+\end{itemize}
+Ad esempio \texttt{ls -l | grep "Aug} dove l'output di \texttt{ls -l} viene passato a \texttt{grep "Aug"} grazie alla pipe
+\subsection{Architetture eterogenee}
+Ci sono due modi di combinare gli stili ottenendo così un architettura eterogenea:
+\begin{itemize}
+    \item Modo gerarchico
+    \item Permettendo che una componente sia un mix di architetture
+\end{itemize}
+\subsection{Microservices}
+\customfbox{Avere servizi separati e quindi potenzialmente più piccoli e facili da gestire (sviluppare, testare, deployare), anche dislocati su server diversi}
+\subsubsection{Perchè?}
+Se la app cresce:
+\begin{itemize}
+    \item La complessità aumenta
+    \item Difficile trovare e risolvere bug
+    \item Difficile effettuare  modifiche
+    \item Tempi estesi per il deploy
+    \item Complesso lavorare in parallelo (team)
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{Immagini/monolithvsmicroservice.png}
+\end{center}
+Ogni microservizio può essere scritto in un linguaggio di programmazione diverso ed avere diversi DBMS.
+\subsubsection{Comunicazione}
+\begin{itemize}
+    \item \textbf{API Gateway}: espone un'interfaccia verso i client
+    \item \textbf{REST}: le applicazioni basate su REST utilizzano le richieste HTTP per tutte e quattro le operazioni di \texttt{CRUD} (Create, Read, Update, Delete)
+\end{itemize}
+\subsubsection{Problemi}
+\begin{itemize}
+    \item Stabilire la dimensione dei micro servizi
+    \item Sviluppo del meccanismo di comunicazione tra i servizi
+    \item Esposizione ai disservizi di rete
+    \item Gestione dello schema partizionato dei DB
+    \item Difficoltà di testing
+    \item Maggior consumo di risorse e memoria
+\end{itemize}
 \end{document}
