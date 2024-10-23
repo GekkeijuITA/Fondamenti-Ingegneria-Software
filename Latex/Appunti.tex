@@ -643,4 +643,129 @@ Ogni microservizio può essere scritto in un linguaggio di programmazione divers
     \item Difficoltà di testing
     \item Maggior consumo di risorse e memoria
 \end{itemize}
+\chapter{Design delle componenti}
+\section{Fasi}
+\begin{center}
+    \includegraphics[width=0.7\textwidth]{Immagini/processocomponentifasi.png}
+\end{center}
+\section{Design by contract}
+E' un metodo di design per il software che ha come obiettivo quello  di migliorarne la qualità e prescrive che il progettista debba definire specifiche precise delle interfacce dei classi/componenti software, basandosi sulla metafora di un contratto legale (il "contratto", viene creato per ogni componente del sistema \underline{prima che sia codificato}). L'idea centrale è che una componente software ha degli obblighi nei confronti delle altre componenti.
+\subsection{Elementi di un contratto}
+\begin{itemize}
+    \item \textbf{Pre-condizione}: espressione a valori booleani rappresentante le aspettative sullo 'stato del mondo' prima che venga eseguita un'operazione
+    \item \textbf{Post-condizione}: espressione a valori booleani riguardante lo 'stato del mondo' dopo l'esecuzione di un'operazione
+    \item \textbf{Invariante di classe}: condizione che ogni oggetto della classe deve soddisfare quando è 'in equilibrio'
+\end{itemize}
+\textbf{Le precondizioni sono utili?} a prima vista potrebbe risultare inutile in quanto si possono aggiungere controlli all'interno del codice però chi è responsabile di questi controlli? Senza una dichiarazione esplicita  potremmo avere \begin{enumerate}
+    \item \textbf{Troppi pochi controlli}
+    \item \textbf{Troppi controlli}
+\end{enumerate}
+\subsection{Vantaggi}
+\begin{itemize}
+    \item Codifica: guida per lo sviluppatore durante la fase di codifica
+    \item Migliorano la qualità del software: definisce quale componente è responsabile ad effettuare i controlli. Aiuta a scrivere operazioni semplici  che soddisfino un contratto ben definito
+    \item Documentazione: \texttt{Pre}, \texttt{Post} e \texttt{Invarianti} documentano in  modo preciso cosa fa una componente/classe
+    \item Testing: guida alla generazione di casi di test "black-box"
+    \item Debugging: permette di trovare il "colpevole" di un malfunzionamento: \begin{itemize}
+        \item Le eccezioni si sollevano quando il contratto è violato
+    \end{itemize}
+\end{itemize}
+\section{Progettazione degli algoritmi}
+E' l'attività più vicina alla codifica (spesso viene lasciata in parte o totalmente agli sviluppatori) e, di solito, si seguono i seguenti passi:
+\begin{enumerate}
+    \item Si analizza la descrizione di design della classe "target"
+    \item Se esistono una o più operazioni che necessitano di un algoritmo, se  è possibile selezionare un algoritmo noto si seleziona altrimenti occorre definire un algoritmo e si sceglie una notazione e si progetta utilizzando la nozione di "stepwise refinement"
+    \item Si usano i metodi formali per provare la correttezza dell'algoritmo proposto
+\end{enumerate}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Immagini/stepwiserefinement.png}
+    \caption{Stepwise Refinement}
+\end{figure}
+\subsection{Notazioni}
+Esistono diverse notazioni utilizzate per rappresentare un algoritmo:
+\begin{itemize}
+    \item \textbf{Visuali}: Activity Diagram di UML, Flowchart, Box Diagram, Structured Chart, Decision Table, \ldots
+    \item \textbf{Testuali}:  Program Design Language (PDL) o pseudocodice
+\end{itemize}
+\subsubsection{PDL}
+Il \textbf{Program Design Language} (PDL) o pseudocodice è un linguaggio semplificato che usa il vocabolario di un linguaggio naturale e la sintassi di un linguaggio di programmazione.
+\section{Principi di progettazione}
+\customfbox{I principi di progettazione guidano verso il raggiungimento degli obiettivi di qualità per il progetto}
+Porta a produrre software: manutenibile, comprensibile, semplice da testare, riusabile, riparabile e portatile \ldots\\
+Si possono applicare per tutti i sistemi non solo Object Oriented!
+\subsection{Principi}
+\subsubsection{Astrazione}
+Permette di concentrarsi su un problema ad un determinato livello di astrazione, senza perdersi in dettagli irrilevanti. Nasconde informazioni che a un determinato livello non servono.\\
+Forme di astrazione:
+\begin{itemize}
+    \item \textbf{Funzionale}:: definizione di una funzionalità indipendentemente dall'algoritmo che la implementa
+    \item \textbf{di Dati}: definizione di un tipo di dato in base alle operazioni che su di esso possono essere fatte, senza definirne una struttura concreta
+    \item \textbf{di Controllo}: definizione di un meccanismo di controllo senza indicarne i dettagli interni
+\end{itemize}
+\subsubsection{Decomposizione}
+Cercare di risolvere un problema in una volta sola è in genere più difficile che risolverlo per parti.
+\customfbox{\textbf{Legenda:} \begin{itemize}
+    \item $P$ problema
+    \item $C(P)$ complessità di $P$
+    \item $E(P)$ effort (sforzo) per la risoluzione (software) di $P$
+\end{itemize}}
+Dati due problemi $P_{1}$ e $P_{2}$
+\begin{itemize}
+    \item Se $C(P_{1})>C(P_{2})$ allora vale $E(P_{1})>E(P_{2})$
+    \item $C(P_{1}+P_{2})>C(P_{1})+C(P_{2})$ vale empiricamente
+    \item $E(P_{1}+P_{2})>E(P_{1})+E(P_{2})$
+\end{itemize}
+L'ultima disequazione porterebbe a una conclusione sbagliata che se noi dividessimo il problema e quindi il software infinite volte l'effort di sviluppo diventerebbe nullo. In realtà entrano in gioco altre variabili:
+\begin{center}
+    \includegraphics[width=.7\textwidth]{Immagini/decomposizionegraph.png}
+\end{center}
+Quindi dal grafico sappiamo che non si deve dividere troppo nè troppo poco.
+\subsubsection{Modularità}
+\customfbox{\textbf{Modulo}: è un'entità SW, identificata da un nome che può fornire servizi software; contiene istruzioni, strutture dati, controllo; può essere incluso in un altro modulo; può usare un altro modulo o parte di esso con la relazione 'dipende da'}
+E' una conseguenza del principio di decomposizione, l'idea è quella di tenere separati gli aspetti "unrelated" di un software (\textbf{Separation of concerns}). Una valida linea guida è tenere separati il SW di generazione dati dal SW necessario alla loro presentazione e permette di cambiare la rappresentazione sullo schermo senza dover modificare il sistema di calcolo. La struttura di un'applicazione software, è spesso caratterizzata da tre livelli:
+\begin{itemize}
+    \item \textbf{Presentazione}: insieme dei moduli che gestiscono l'interazione con l'utente
+    \item \textbf{Logica Applicativa}: insieme dei moduli che realizzano la logica applicativa, implementano le funzionalità richieste e gestiscono il flusso dei dati
+    \item \textbf{Dati e Risorse}: insieme dei moduli che gestiscono i dati che rappresentano le informazioni utilizzate
+\end{itemize}
+Per modularizzare sostanzialmente bisogna fare in modo che ogni modulo esegua un singolo compito e minimizzare il numero e la complessità delle interconnessioni fra moduli. Dei moduli coesi e poco accoppiati sono\begin{itemize}
+    \item facili da comprendere
+    \item riusabili
+    \item semplici da modificare
+    \item semplici da testare
+\end{itemize}
+Bisogna evitare i moduli "monster" e per far ciò bisogna seguire i criteri per una buona modularizzazione: moduli piccoli, separation of concerns, alta coesione e basso accoppiamento e usare delle metriche o delle view per vedere se i criteri sono stati applicati.\\
+Un modulo \textbf{coeso} svolge un \underline{unico compito}, in altre parole coesione è quando un modulo deve esprimere una sola astrazione, esistono diverse tipologie di coesione ma di solito si intende quella \textbf{funzionale}: tutti gli elementi del modulo contribuiscono ad un singolo ben definito task.\\
+\customfbox{Ogni modulo non deve dipendere da troppi altri moduli, nè dipendervi in modo troppo forte}
+Il coupling misura (informalmente) il grado di dipendenza di un modulo dagli altri e come prima non bisogna collegarli troppo e troppo poco.
+\begin{itemize}
+    \item Accoppiamento buono: chiamata di routine/metodo/funzione di altro modulo, uso di tipo di dato definito in altro modulo, inclusione o importazione di un package o di una libreria
+    \item Accoppiamento cattivo: content coupling, un modulo modifica il valore di una variabile in un altro modulo
+\end{itemize}
+L'accoppiamento cattivo va evitato perchè complica enormemente la compresione e la modifica, in un sistema OO si riduce incapsulando tutti i campi di una classe dichiarandoli privati e fornendo i metodi di get e set. Nei linguaggi 'Legacy' le cose sono più complicate\ldots
+\begin{itemize}
+    \item \textbf{Fan-in}: numero di archi entranti in un modulo
+    \item \textbf{Fan-out}: numero degli archi uscenti da un modulo
+\end{itemize}
+Un alto numero di Fan-in indica un buon riuso, un alto numero di Fan-out indica eccessiva dipendenza e che il modulo "fa troppo" (va decomposto).\\
+\textbf{Generalità}: è la proprietà di design che "migliora" il riuso di un modulo in altri progetti (in futuro), si cerca di rendere un modulo il più generale possibile in modo da poterlo usare in più contesti. Questo principio è controverso perchè 'peggiora' un altro principio quello della 'semplicità' (KISS).
+\subsection{Principio KISS}
+Il design dovrebbe essere il più semplice possibile.
+\begin{itemize}
+    \item Keep It Simple, Stupid
+    \item Keep It Short and Simple
+\end{itemize}
+\subsection{Sto seguendo i principi?}
+Esistono delle metriche del SW che ci permettono di misurare l'aderenza a principi che abbiamo visto:
+\begin{itemize}
+    \item Metrica SW, ovvero la misura quantitativa del grado di possesso di uno specifico attributoda parte di un sistema, un componente, o un processo (es. LCOM (Lack of Cohesion))
+    \item Esistono dei tool che forniscono  metriche e viste
+\end{itemize}
+\textbf{Esempio di metrica LCOM}
+\begin{center}
+    LCOM = numero di intersezioni vuote - numero di intersezioni non vuote
+\end{center}
+\includegraphics[width=0.3\textwidth]{Immagini/esempioLCOM.png}
+Le intersezioni saranno $I_{1}=\{a,b,c\},I_{2}=\{b,c\},I_{3}=\{x,y\}$ quindi si avrà che $I_{1}\cap I_{2} \neq \emptyset $ mentre $I_{1}\cap I_{3} =I_{2}\cap I_{3} = \emptyset$ quindi avremo che $LCOM = 2-1 = 1$ e visto che è $>0$ classe $C$ non è coesa.
 \end{document}
