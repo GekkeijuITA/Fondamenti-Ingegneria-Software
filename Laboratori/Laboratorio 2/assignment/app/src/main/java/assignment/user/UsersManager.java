@@ -14,13 +14,13 @@ import assignment.cart.Cart;
 
 public class UsersManager {
 
-    public final static String basicUserID = "User00-";
-    public final static List<User> users = new ArrayList<User>();
+    public static final String BASICUSERID = "User00-";
+    protected static final List<User> users = new ArrayList<>();
 
 
     public boolean findUserFromDB(String userID) throws SQLException {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", basicUserID+userID, "password");) {
-            String query = "select firstname, lastname " + "from USERS where username="+ (basicUserID+userID);
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", BASICUSERID+userID, System.getenv("DB_PASSWORD"));) {
+            String query = "select firstname, lastname " + "from USERS where username="+ (BASICUSERID+userID);
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
@@ -40,18 +40,14 @@ public class UsersManager {
     
     void removeEmptyTitlesFromUser(User user) {      
         List<String> titles = user.getTitles();
-        for (int i = 0; i < titles.size(); i++) {
-          if (titles.get(i).isEmpty()) {
-            titles.remove(i); 
-          }
-        }
+        titles.removeIf(String::isEmpty);
     }
 
-    void addCartToUser(User user, Cart cart) throws Exception{
+    void addCartToUser(User user, Cart cart) {
         try {
             user.linkCart(cart);
         } catch (Exception e) {
-            throw e;
+            throw new IllegalArgumentException("Error linking cart to user", e);
         }
     }
 
