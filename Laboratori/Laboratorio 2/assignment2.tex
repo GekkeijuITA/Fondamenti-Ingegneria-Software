@@ -9,6 +9,7 @@
 \usepackage{ulem}
 \usepackage{listings}
 \usepackage{array}
+\usepackage{float}
 
 \let\olditemize\itemize
 \renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
@@ -564,4 +565,46 @@ L'\texttt{id} di un prodotto non dovrebbe essere modificabile, quindi il metodo 
 Il nome del metodo \texttt{printAllRoles} lo si potrebbe modificare in \texttt{getRolesAsString}.
 \subsubsection{UserManager.java}
 Nel metodo \texttt{findUserFromDB} non gestiamo correttamente i parametri \texttt{BASICUSERID} e \texttt{userID} quando concatenati alla query lasciando la possibilità di SQL injection, una possibile soluzione potrebbe essere usare la funzione \texttt{setString} del \texttt{PreparedStatement} cambiando la query in \texttt{"select firstname, lastname from USERS where username=?"}.
+
+\section{Class Visualizer}
+\subsection{Cart.java}
+Uses: 3, Used by: 2
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/cartDiagram.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/cartPreview.png}
+\end{figure}
+\subsection{Product.java}
+Uses: 1, Used by: 1
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/productDiagram.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/productPreview.png}
+\end{figure}
+\subsection{User.java}
+Uses: 4, Used by: 1
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/userDiagram.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/userPreview.png}
+\end{figure}
+\subsection{UserManager.java}
+Uses: 4, Used by: 0
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/userManagerDiagram.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/userManagerPreview.png}
+\end{figure}
 \end{document}
