@@ -55,10 +55,13 @@ Vaccarecci Lorenzo Livio (5462843)\normalsize}
 \subsection{Cart.java}
 Porzione di codice:
 \begin{lstlisting}[language=Java]
-if (quantity > 0)
-    products.put(product, products.getOrDefault(product, 0) + quantity);
-    else 
-products.put(product, products.getOrDefault(product, 0));
+public void addProduct(Product product, int quantity) {
+    if (quantity > 0)
+        products.put(product, products.getOrDefault(product, 0) + quantity);
+        else 
+    products.put(product, products.getOrDefault(product, 0));
+
+}
 \end{lstlisting}
 Tipologia: Maintainability\\
 Correzione:
@@ -71,13 +74,15 @@ public void addProduct(Product product, int quantity) {
 }
 \end{lstlisting}
 \vspace{.5em}\hrule\vspace{.5em}
-Porzione di codice \texttt{updateProductQuantity}:
+Porzione di codice:
 \begin{lstlisting}[language=Java]
-if (products.containsKey(product)==true)
-    if (quantity <= 0) 
-        removeProduct(product);
-    else 
-        products.put(product, quantity);
+public void updateProductQuantity(Product product, int quantity) {
+    if (products.containsKey(product)==true)
+        if (quantity <= 0) 
+            removeProduct(product);
+        else 
+            products.put(product, quantity);
+}
 \end{lstlisting}
 Tipologia: Maintainability\\
 Correzione:
@@ -93,9 +98,11 @@ public void updateProductQuantity(Product product, int quantity) {
 }
 \end{lstlisting}
 \vspace{.5em}\hrule\vspace{.5em}
-Porzione di codice \texttt{getProducts}:
+Porzione di codice:
 \begin{lstlisting}[language=Java]
-return new HashMap<Product, Integer>(products);
+public Map<Product, Integer> getProducts() {
+    return new HashMap<Product, Integer>(products);
+}
 \end{lstlisting}
 Tipologia: Maintainability\\
 Correzione: 
@@ -107,10 +114,12 @@ public Map<Product, Integer> getProducts() {
 \vspace{.5em}\hrule\vspace{.5em}
 Porzione di codice:
 \begin{lstlisting}[language=Java]
-if(this.calculateTotal() >= cart1.calculateTotal() && this.calculateTotal() >= cart2.calculateTotal())
-    return true;
-else 
-    return false;
+public boolean calc(Cart cart1, Cart cart2) {
+    if(this.calculateTotal() >= cart1.calculateTotal() && this.calculateTotal() >= cart2.calculateTotal())
+        return true;
+    else 
+        return false;
+}
 \end{lstlisting}
 Tipologia: Maintainability\\
 Correzione:
@@ -122,7 +131,9 @@ public boolean calc(Cart cart1, Cart cart2) {
 \vspace{.5em}\hrule\vspace{.5em}
 Porzione di codice:
 \begin{lstlisting}[language=Java]
-calc(cart2, cart1);
+public void calcHigher(Cart cart1, Cart cart2) {
+    calc(cart2, cart1);
+}
 \end{lstlisting}
 Tipologia: Maintainability\\
 Correzione:
@@ -241,16 +252,16 @@ public void setIsAvailable(boolean isAvailable) {
 \vspace{.5em}\hrule\vspace{.5em}
 Porzione di codice:
 \begin{lstlisting}[language=Java]
-public void setFullDetailedProduct(
-    String id, 
-    String name, 
-    String description, 
-    double unitPrice, 
-    int category, 
-    String brand, 
-    int stockQuantity, 
-    boolean isAvailable
-)
+public void setFullDetailedProduct(String id, String name, String description, double unitPrice, int category, String brand, int stockQuantity, boolean isAvailable) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.category = category;
+        this.brand = brand;
+        this.stockQuantity = stockQuantity;
+        this.isAvailable = isAvailable;
+}
 \end{lstlisting}
 Tipologia: Maintainability\\
 Correzione:
@@ -571,7 +582,7 @@ Nel metodo \texttt{findUserFromDB} non gestiamo correttamente i parametri \textt
 Uses: 3, Used by: 2
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/cartDiagram.png}
+    \includegraphics[width=0.5\textwidth]{img/cartDiagram.png}
 \end{figure}
 \begin{figure}[H]
     \centering
@@ -581,7 +592,7 @@ Uses: 3, Used by: 2
 Uses: 1, Used by: 1
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/productDiagram.png}
+    \includegraphics[width=0.5\textwidth]{img/productDiagram.png}
 \end{figure}
 \begin{figure}[H]
     \centering
@@ -591,17 +602,17 @@ Uses: 1, Used by: 1
 Uses: 4, Used by: 1
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/userDiagram.png}
+    \includegraphics[width=0.5\textwidth]{img/userDiagram.png}
 \end{figure}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{img/userPreview.png}
 \end{figure}
 \subsection{UserManager.java}
-Uses: 4, Used by: 0
+Uses: 5, Used by: 0
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/userManagerDiagram.png}
+    \includegraphics[width=0.5\textwidth]{img/userManagerDiagram.png}
 \end{figure}
 \begin{figure}[H]
     \centering
