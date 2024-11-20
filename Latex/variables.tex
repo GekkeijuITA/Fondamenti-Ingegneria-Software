@@ -10,6 +10,7 @@
     \usepackage{tikz}
     \usetikzlibrary{shapes.geometric, arrows}
     \usepackage{array}
+    \usepackage{varwidth}
     
     \let\olditemize\itemize
     \renewcommand\itemize{\olditemize\setlength\itemsep{0em}}
@@ -19,5 +20,8 @@
     \tikzstyle{arrow} = [thick,->,>=stealth]
     \geometry{left=1cm, right=1cm, top=2cm, bottom=2cm}
 }
-\newcommand{\customfbox}[1]{\vspace{1em}\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\centering #1}}\vspace{1em}}
-
+\newcommand{\customfbox}[1]{
+    \begin{center}
+        \noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\centering #1}}
+    \end{center}
+}

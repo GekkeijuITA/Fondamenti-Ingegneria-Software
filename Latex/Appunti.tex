@@ -769,6 +769,159 @@ Esistono delle metriche del SW che ci permettono di misurare l'aderenza a princi
 \includegraphics[width=0.3\textwidth]{Immagini/esempioLCOM.png}
 Le intersezioni saranno $I_{1}=\{a,b,c\},I_{2}=\{b,c\},I_{3}=\{x,y\}$ quindi si avrà che $I_{1}\cap I_{2} \neq \emptyset $ mentre $I_{1}\cap I_{3} =I_{2}\cap I_{3} = \emptyset$ quindi avremo che $LCOM = 2-1 = 1$ e visto che è $>0$ classe $C$ non è coesa.
 \chapter{UML - Introduzione}
+\section{Cos'è}
+L'UML è una famiglia di notazioni grafiche utili a supportare la descrizione e il progetto dei sistemi software. E' stato proposto come standard dall'OMG (Object Management Group) che ha come obiettivo di creare standard nel contesto IT.\\
+E' unificato perchè in pratica è una collezione di varie notazioni preesistenti (Rumbaugh, Booch, Jacbson, Harel), integrate e rese Object Oriented.\\
+L'UML \textbf{non} è:
+\begin{itemize}
+    \item Un metodo/processo di sviluppo $\rightarrow$ e' un linguaggio/notazione
+    \item Un linguaggio di programmazione $\rightarrow$ è un linguaggio di modellazione
+    \item Legato a UP (Unified Process) $\rightarrow$ è indipendente dal processo
+\end{itemize}
+L'UML può essere usato in diversi modi: 
+\begin{itemize}
+    \item \textbf{Abbozzo (sketch)}: per aiutare la comunicazione e la discussione
+    \item \textbf{Progetto dettagliato (blueprint)}: per fornire un modello completo/dettagliato da implementare
+    \item \textbf{Linguaggio di programmazione}: per fornire un "modello eseguibile"
+\end{itemize}
+\section{Prospettive}
+\begin{itemize}
+    \item \textbf{Prospettiva software}: gli elementi rappresentati sono elementi di un sistema software, serve per descrivere il design di un sistema software e per documentare un sistema software
+    \item \textbf{Prospettiva concettuale}: gli elementi rappresentati sono concetti del dominio e serve per modellare il dominio del business e i processi
+\end{itemize}
+\section{Modello di dominio (del business)}
+E' una rappresentazione visuale di classi concettuali o di oggetti del mondo reale di un dominio ed è un glossario visuale delle astrazioni significative del dominio.\\
+E' utile per:
+\begin{itemize}
+    \item Chiarire i concetti di dominio nel quale il sistema software che dobbiamo progettare andrà inserito
+    \item Ispirare nomi di alcune classi e attributi software nel design
+    \item La progettazione del sistema
+\end{itemize}
+\section{Un po' di storia}
+\begin{center}
+    \begin{tikzpicture}
+        % draw a horizontal line
+        \draw (0,0) -- (18.5,0);
+        
+        % draw vertical lines
+        \foreach \x in {1,3.5,5.5,7.5,9.5,11.5,13.5,15.5,17.5}
+        \draw (\x cm,3pt) -- (\x cm,-3pt);
+        
+        % draw nodes to add events
+        \draw (1,0) node[above=3pt] {Anni '80} node[below=3pt] {
+        \begin{varwidth}{2cm}
+            \begin{center}
+                \footnotesize
+                Linguaggi ad oggetti iniziano a prendere piede
+            \end{center}
+        \end{varwidth}
+        };
+        \draw (3.5,0) node[above=3pt] {1980-1995} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    "babele" di linguaggi di modellazione
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (5.5,0) node[above=3pt] {1994} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    Rumbaugh si unisce a Booch alla Rational Software (azienda)
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (7.5,0) node[above=3pt] {1995} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    Booch e Rumbaugh presentano OOPSLA Unified Method v 0.8 \\
+                    Viene dato l'annuncio che Ratinal ha comprato Objctory dove lavora Jacobson
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (9.5,0) node[above=3pt] {1996} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    OMG entra in campo sollecitata dai venditori di strumenti software terrorizzati dalla possibilità che Rational creasse un standard de-facto
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (11.5,0) node[above=3pt] {1997} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    call for proposal da parte di OMG. \\
+                    "Tre amigos" presentano UML 1.0
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (13.5,0) node[above=3pt] {11/1997} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    Nasce UML 1.1 (standard OMG)
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (15.5,0) node[above=3pt] {03/2005} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    UML 2.0 diventa la versione ufficiale
+                \end{center}
+            \end{varwidth}
+        };
+        \draw (17.5,0) node[above=3pt] {Adesso} node[below=3pt] {
+            \begin{varwidth}{2cm}
+                \begin{center}
+                    \footnotesize
+                    UML 2.5.1
+                \end{center}
+            \end{varwidth}
+        };
+    \end{tikzpicture}
+\end{center}
+\section{Perchè}
+Studiare UML è utile perchè è uno standard, è usato/richiesto dall'industria (almeno a livello di abbozzo) ed è indispenabile per le figure di Analista e Progettista (architetto) software.\\
+Non lo studieremo in modo approfondito perchè, ad esempio, l'approccio blueprint è  poco usato nell'industria.
+\section{Notazione e meta-modello}
+UML definisce una famiglia di notazioni e un meta-modello.
+\customfbox{Notazione = sintassi grafica del linguaggio \\ Meta-modello = definisce i concetti stessi del linguaggio}
+\textbf{Esempio di meta-modello}: UML di una classe (generica) Java
+\begin{center}
+    \includegraphics[width=.8\textwidth]{Immagini/UMLmetamodello.png}
+\end{center}
+In UML un sistema viene descritto utilizzando diverse viste e diversi diagrammi
+\customfbox{Vista = particolare aspetto di un sistema SW dal punti di vista di uno specifico ruolo}
+Un diagramma descrive/presenta una view/subview, chiameremo \textbf{Modello} un insieme di diagrammi che descrivono aspetti diversi dello stesso sistema SW. In un modello bisogna fare attenzione a non avere viste possibilmente sovrapposte (problema di consistenza) e incomplete (problema di completezza).\\
+Il diagramma UML non è abbastanza e per questo esistono due soluzioni:
+\begin{itemize}
+    \item Si cerca o si produce un "estensione" di UML (profilo UML)
+    \item Si usano diagrammi non UML
+\end{itemize}
+Facendo ciò si perde uno dei  vantaggi di UML: la standardizzazione.
+\subsection{Profilo}
+Come anticipato, UML si può estendere tramite il concetto di profilo per avere la possibilità di specificare particolari domini applicativi o tipologie di applicazioni.\\
+Un profilo è costituito principalmente da:
+\begin{itemize}
+    \item \textbf{Stereotipi}: elementi aggiuntivi ottenuti modificando quelli esistenti
+    \item \textbf{Vincoli aggiuntivi}
+    \item \textbf{Informazioni semantiche aggiuntive} relative agli elementi aggiuntivi
+\end{itemize}
+\customfbox{Non si può guardare un diagramama UML e dire esattamente cosa farà il codice corrispondente}
+Esiste un UML "legale"? La risposta è si e no: quello definito dalla specifica del  linguaggio (documento OMG) è quello legale ma UML è molto complesso e si presta a multiple interpretazioni, così le persone lo usano adottando convenzioni particolari (per semplificare) e quindi si perde la standardizzazione. Di solito si aggiunge nei diagrammi "\textbf{non-normativo}".
+\section{Come usare UML}
+\begin{enumerate}
+    \item Capire il punti di vista dell''autore per capire i diagrammi
+    \item Meglio dei buoni diagrammi "illegali" che altri formalmente corretti ma "scarsi"
+    \item UML è molto complesso da prestarsi a multiple interpretazioni: usate un sottoinsieme e solo i diagrammi che ritenete utili (e che avete compreso bene)
+    \item La completezza è nemica della chiarezza
+    \item Qualsiasi informazione in UML può essere sempre soppressa
+\end{enumerate}
+\chapter{UML - Class Diagram}
 \chapter{UML - Sequence Diagram}
 \chapter{UML - State Machine \& Activity Diagram}
 \chapter{UML - Component, Package \& Deployment Diagram}
