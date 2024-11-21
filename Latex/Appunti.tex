@@ -922,6 +922,121 @@ Esiste un UML "legale"? La risposta è si e no: quello definito dalla specifica 
     \item Qualsiasi informazione in UML può essere sempre soppressa
 \end{enumerate}
 \chapter{UML - Class Diagram}
+\section{Introduzione}
+Definisce:
+\begin{itemize}
+    \item Le classi
+    \item Le loro feature \begin{itemize}
+        \item Attributi
+        \item Operazioni
+    \end{itemize}
+    \item Le relazioni tra classi \begin{itemize}
+        \item Associazioni
+        \item Aggregazione/Composizione
+        \item Specializzazione/Generalizzazione
+        \item Dipendenze
+    \end{itemize}
+\end{itemize}
+Ovvero la parte statica di quello che intendiamo modellare.
+\section{Prospettive}
+Il significato di un class diagram e dei suoi elementi dipende dalla prospettiva:
+\begin{itemize}
+    \item Prospettiva concettuale: descriviamo gli elementi del "pezzo di mondo" che ci interessa modellare, la classe UML è un concetto proprio del dominio e un'operazione UML è un'azione/responsabilità
+    \item Prospettiva software: descriviamo il design di un software, ovvero i modulo software che costituiranno l'implementazione vera e propria del sistema, la classe UML è una classe in un linguaggio OO e un'operazione UML è implementata da un metodo
+\end{itemize}
+\section{Classe}
+Il concetto di classe è lo stesso dell'OO, incapsula caratteristiche comuni ad un gruppo di progetti, una classe genera oggeto con \texttt{create()} e un oggetto è un istanza di una classe. Gli attributi determinano lo stato degli oggetti mentre le operazioni descrivono il comportamento. Gli oggetti connessi tra loro possono collaborare per compiere task più complessi mediante scambio di messaggi.
+\subsection{Rappresentazione}
+Una classe in UML è semplicemente rappresentata da un rettangolo con il nome della classe all'interno, possiamo aggiungere gli attributi e le operazioni.
+\begin{center}
+    \includegraphics[width=.3\textwidth]{Immagini/UMLClass.png}
+\end{center}
+Se una classe è \texttt{abstract} viene indicata con il nome in corsivo.\\
+Si ha una dipendenza tra due classi se la modifica di una classe può avere effetto sull'altra, si rappresenta con una freccia tratteggiata.
+\subsection{Attributi}
+\begin{center}
+    \texttt{visibilità nome: tipo [molteplicità] = default \{proprietà\}}
+\end{center}
+\begin{itemize}
+    \item \textbf{Visibilità}: \begin{itemize}
+        \item \texttt{+}: pubblico
+        \item \texttt{-}: privato
+        \item \texttt{\#}: protetto
+        \item \texttt{\~}: package
+    \end{itemize}
+    \item Il nome dell'attributo è l'unica parte obbligatoria
+    \item Il tipo dell'attributo può essere: \begin{itemize}
+        \item Primitivo
+        \item Il nome di una classe definita nello stesso modello
+    \end{itemize}
+    \item Default rappresenta il valore di default dell'attributo di un oggetto appena creato
+    \item Proprietà aggiuntive (es. \texttt{readOnly})
+\end{itemize}
+Le regole di visibilità tra i vari linguaggi e UML sono spesso differenti.\\
+Gli attributi possono essere \texttt{static} e, come per il linguaggio Java, gli oggetti di una stessa classe condividono lo stesso valore per un attributo. In UML si indica sottolineando il nome dell'attributo.
+\subsection{Molteplicità}
+La molteplicità indica il quntitativo degli attributi, alcuni valori possibili sono:
+\begin{itemize}
+    \item 1 (uno e uno solo). E' il valore di default
+    \item 0..1 (al più uno)
+    \item * (un numero imprecisato, eventualmente nessuno)
+    \item 1..* (almeno uno)
+    \item n..m con $m\geq 1$
+\end{itemize}
+Gli elementi di un attributo con molteplicità $>1$ sono considerati come un insieme, se essi sono dotati anche di ordine si aggiunge la proprietà \texttt{\{ordered\}}
+\subsection{Operazioni}
+\begin{center}
+    \texttt{visibilità nome (lista parametri) : tipo-ritornato {proprietà}}
+\end{center}
+\begin{itemize}
+    \item Visibilità e nome stesse regole degli attributi
+    \item Lista parametri contiene nome e tipo dei parametri, secondo la forma \texttt{direzione nome : tipo = default}
+    \item Direzione: input (in), output (out) o entrambi (inout). Il valore di default è in.
+    \item nome, tipo e valore di default sono analoghi a quelli degli attributi
+    \item Tipo-ritornato è il tipo del valore di ritorno
+\end{itemize}
+\customfbox{Le operazioni get/set di solito non si indicano perchè è scontato che esistono}
+In UML esistono due tipi di operazioni:
+\begin{itemize}
+    \item \textbf{Query} che ottengono un valore da un oggetto senza side efficiente
+    \item \textbf{Modificatori} che modificano gli attributi (lo stato) dell'oggetto su cui sono chiamate
+\end{itemize}
+Un operazione può essere \texttt{static} e, come per il linguaggio Java, le operazioni non operano solo su una particolare istanza della classe ma sulla classe stessa. in UML si indica sottolineando il nome dell'operazione.
+\customfbox{Un operazione viene invocata su un oggetto e corrisponde alla dichiarazione di una procedura/funzione, un metodo è il corpo di tale procedura/funzione, è l'implementazione di un operazione}
+Se un'operazione è \texttt{abstract} viene indicata con il nome in corsivo.
+\section{Datatype}
+In UML esiste il concetto di datatype, per sua natura un oggetto ha un identità mentre un datatype no: le istanze sono valori non oggetti. Si rappresentano come classi con lo stereotipo \texttt{<<datatype>>}
+\section{Associazioni}
+\customfbox{Un'associazione rappresenta una relazione tra classi}
+Il \texttt{>} indica in che direzione deve essere letta l'associazione, in alternativa si può indicare il ruolo di uno dei due estremi dell'associazione. In un diagramma delle classi non è consigliato aggiungere nomi delle associazioni e ruoli. \\
+Il verso di navigazione indica in quale direzione è possibile reperire le informazioni ($\rightarrow$).
+\subsection{Molteplicità}
+La molteplicità delle associazioni indica il numero di link tra gli oggetti delle classi e, come in SQL, si mettono sulla freccia ai due estremi.
+\subsection{Attributi}
+Di solito si usano attributi per tipi primitivi e datatype o associazioni se tipati da classi.\\
+Un associazione riflessiva è quando una classe ha un'associazione con se stessa.
+\subsection{Implementazione (Java)}
+\begin{itemize}
+    \item Associazione molteplicità 1: \texttt{attributo}
+    \item Associazione molteplicità 0..*: \texttt{HashSet}
+    \item Associazione molteplicità \{ordered\} 0..*: \texttt{LinkedList} o \texttt{ArrayList}
+\end{itemize}
+Esistono anche le associazioni bidirezionali ma non possono essere implementate con un singolo attributo. Con le associazioni bidirezionali 1..1 c'è un problema di sincronizzazione.
+\section{Note}
+E' un commento in un linguaggio di programmazione, si usa anche per specificare il "behaviour" di un'operazione
+\section{Aggregazione}
+Rappresenta la relazione "tutto-parti", è una relazione di tipo "è composto da" e si rappresenta con un rombo vuoto.
+\section{Composizione}
+\textbf{Forma forte} di aggregazione: esprime la relazione "ha-un"/"è composto di", le proprietà sono:
+\begin{itemize}
+    \item Se il composto/intero viene distrutto, anche le sue parti saranno distrutte
+    \item Una parte può appartenere ad un solo oggetto intero alla volta
+\end{itemize}
+\begin{itemize}
+    \item \textbf{Generalizzazione = relazione "è un"}, ogni istanza di una classe è anche istanza della superclasse
+    \item \textbf{Ereditarietà}: meccanismo attraverso il quale elementi specializzati incorporano la struttura ed il comportamento di elementi più generali. Nella classe erede è possibile aggiungere nuovi attributi e operazioni e ridefinire le operazioni (overriding)
+\end{itemize}
+\section{Generalizzazione ed ereditarietà}
 \chapter{UML - Sequence Diagram}
 \chapter{UML - State Machine \& Activity Diagram}
 \chapter{UML - Component, Package \& Deployment Diagram}
