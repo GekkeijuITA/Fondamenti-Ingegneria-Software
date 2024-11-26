@@ -1032,12 +1032,91 @@ Rappresenta la relazione "tutto-parti", è una relazione di tipo "è composto da
     \item Se il composto/intero viene distrutto, anche le sue parti saranno distrutte
     \item Una parte può appartenere ad un solo oggetto intero alla volta
 \end{itemize}
+\section{Generalizzazione ed ereditarietà}
 \begin{itemize}
     \item \textbf{Generalizzazione = relazione "è un"}, ogni istanza di una classe è anche istanza della superclasse
     \item \textbf{Ereditarietà}: meccanismo attraverso il quale elementi specializzati incorporano la struttura ed il comportamento di elementi più generali. Nella classe erede è possibile aggiungere nuovi attributi e operazioni e ridefinire le operazioni (overriding)
 \end{itemize}
-\section{Generalizzazione ed ereditarietà}
 \chapter{UML - Sequence Diagram}
+\section{Diagrammi di interazione}
+Descrivono la collaborazione di un gruppo di oggetti (ovvero i messaggi), i messaggi possono essere 
+\begin{itemize}
+    \item \textbf{Sincroni}: il mittente si pone in attesa del risultato
+    \item \textbf{Asincroni}: il mittente continua l'esecuzione
+\end{itemize}
+\section{Notazione}
+\begin{itemize}
+    \item \textbf{Messaggio trovato (input)}: si rappresenta come freccia continua che, nella coda, ha un pallino nero
+    \item \textbf{Messaggio}: come per il messaggio trovato tranne che non c'è pallino
+    \item \textbf{Controllo del partecipante}: si rappresenta come un rettangolo "verticale" sotto il partecipante, indica quando il partecipante ha il controllo del flusso
+\end{itemize}
+\section{Sintassi dei messaggi}
+\begin{itemize}
+    \item \textbf{Self}: chiamata di un metodo appartenente alla classe stessa (è una freccia che parte e arriva alla stessa classe)
+    \item \textbf{Creazione}: creazione di un oggetto (si rappresenta con una freccia tratteggiata per indicare la dipendenza da un altro oggetto)
+    \item \textbf{Distruzione}: distruzione di un oggetto (si indica con un messaggio che finisce con una X)
+\end{itemize}
+\section{Frame}
+\subsection{Cicli e condizioni}
+Cicli e condizioni (la logica di controllo) possono essere espressi mediante i frame di interazione, un frame è un rettangolo che racchiude un gruppo di messaggi.
+\begin{center}
+    \includegraphics[width=.4\textwidth]{Immagini/loopUML.png}
+    \includegraphics[width=.4\textwidth]{Immagini/ifUML.png}
+\end{center}
+Ovviamente i frame possono essere annidati.
+\subsection{Ref}
+\texttt{Ref} sta per \textbf{reference} è usato per semplificare i sequence diagram. Simile al concetto di "procedura" in un linguaggio di programmazione.
+\subsection{Par}
+Utile per esprimere l'interazione di oggetti complessi che possono eseguire diverse azioni/operazioni in parallelo.\\
+I diagrammi di sequenza:
+\begin{center}
+    \begin{tabular}{| p{8cm} | p{8cm} |}
+        \hline
+        \textbf{Pro} & \textbf{Contro} \\
+        \hline
+        Ottimo mezzo per visualizzare l'interazione tra oggetti & Non buono per spiegare i dettagli degli algoritmi, come i cicli e i comportamenti condizionali \\
+        \hline
+    \end{tabular}
+\end{center}
+M. Fowler suggerisce di limitare l'uso dei frame di interazione perchè sono molto pesanti.
+\section{Sequence Diagram di Sistema (SSD)}
+Un diagramma di sequenza di sistema illustra gli eventi di input ed output del sistema relativi ad uno o più scenari di un caso d'uso.\\
+Serve a stabilire con precisione quali sono gli eventi di input e di output del sistema e a rappresentare un punto di partenza per la progettazione delle classi e le loro operazioni e l'analisi dei contratti delle operazioni.
+\section{Comunication Diagram}
+E' una variante del sequence diagram che mette in evidenza la comunicazione tra oggetti.
 \chapter{UML - State Machine \& Activity Diagram}
+\customfbox{Le state machine vengono usate per descrivere il comportamento di una Entità come variazione del suo stato interno quando è sottoposta a sollecitazioni dal mondo esterno (eventi)}
+Più semplicemente le state machine descrivono cosa fa un entità quando riceve un input. Un entità può comportarsi in modo diverso a seconda del suo stato interno.\\
+Una state machine è associata a una classe.
+\section{Stato}
+Rappresenta una situazione durante la quale delle condizioni vengono soddisfatte e delle attività possono essere eseguite.\\
+Gli stati di una macchina a stati UML sono qualcosa di più astratto: ad ognuno di essi corrisponde un diverso comportamento del sistema al verificarsi degli eventi.
+\section{Rappresentazione grafica}
+Graficamente le state machine UML sono dei grafi dove i nodi sono gli stati e gli archi sono le transizioni. In questi grafi lo stato iniziale è rappresentato da un pallino nero che si collega a uno stato iniziale, sugli archi c'è scritto il nome dell'evento e se vicino al nome ci sono delle parentesi quadre dentro c'è la guardia.
+\subsection{Semantica}
+\begin{itemize}
+    \item Una macchina a stati è sempre associata ad un entità e ne descrive il suo comportamento
+    \item La macchina a stati riceve eventi che vengono salvati su una coda ed estratti uno alla volta
+    \item \textbf{Run-to-completion}: un evento viene estratto solo dopo che il precedente è stato processato
+    \item Se ci sono più transizioni eseguibili in un dato momento solo una viene eseguita in modo non determistico
+    \item Un disco nero marca il nodo d'inizio dell'esecuzione, è unico per ogni diagramma di stato
+    \item Un disco nero bordato marca il nodo finale e possono comparire in qualunque numero all'interno di un diagramma
+\end{itemize}
+\begin{center}
+    \includegraphics[width=.7\textwidth]{Immagini/UMLStateMachine.png}
+\end{center}
+\subsection{Transizioni}
+Ogni transizione, oltre allo stato origine e destinazione \textbf{può} specificare:
+\begin{itemize}
+    \item \textbf{Evento}: un 'trigger' che attiva il passaggio di stato, qualcosa che l'entità subisce
+    \item \textbf{Guardia}: una condizione che, se vera, permette il passaggio di stato. Può essere espressa in linguaggio naturale, pseudo-linguaggio, linguaggio di programmazione o in OCL
+    \item \textbf{Attività}: una o più azioni che sono compiute dall'entità prima di cambiare stato, possono essere espresse in modo informale (linguaggio naturale) o sotto forma di pseudolinguaggio
+\end{itemize}
+Una transizione avviene come risposta ad un evento, e al momento della transizione l'entità esegue l'attività specificata.
+\section{Altri tipi di eventi in UML}
+\begin{itemize}
+    \item \texttt{when} (evento di cambiamento): si verifica quando una condizione passa da falsa a vera
+    \item \texttt{After, At} (evento temporale): si verifica dopo un certo tempo o ad una data/ora "precisa"
+\end{itemize}
 \chapter{UML - Component, Package \& Deployment Diagram}
 \end{document}
