@@ -1260,4 +1260,64 @@ In questo caso \texttt{Fish} dipende da \texttt{Water}: vuol dire che nel packag
     \item Generare il diagramma dei package a partire dal  codice stesso usando tool specifici di reverse engineering
     \item Identificare cicli, package poco coesi e package con tante dipendenze entranti per ristrutturare il sistema
 \end{itemize}
+\chapter{Software Design Patterns}
+E' una soluzione elegante (con un nome) di uno specifico problema di design/programmazione OO che costituisce un unità di riuso. L'idea di design pattern deriva da Kent Beck. Attualmente molti cataloghi di pattern sono in genere relativi a un particolare dominio applicativo o a una particolare tipologia di applicazioni.\\
+I design pattern aiutano ad applicare i principi di buona progettazione OO, possono essere applicati sia durante la modellazione che la codifica e facilitano la comunicazione tra sviluppatori.
+\section{Altre unità di riuso}
+\begin{itemize}
+    \item Librerie
+    \item Componenti riusabili (COTS)
+    \item Framework: è un insieme di classi e interfacce cooperanti che realizzano un design riusabile e customizzabile per uno specifico dominio applicativo o tipologia di app, la differenza con la libreria è che lo sviluppatore di un'applicazione scrive le classi (in particolare le operazioni) che vengono chiamate dal framework mentre con una libreria lo sviluppatore chiama le operazioni delle classi di una libreria
+    \item Product line
+    \item Modelli
+\end{itemize}
+I design pattern, rispetto ai framework, sono più astratti, più piccoli, di solito sono meno specializzati: non relativi a un dominio applicativo specifico o tipologia di app.
+\section{GRASP}
+I pattern elementari GRASP sono pattern per l'assegnazione di responsabilità nel software, costituiscono il fondamento per la progettazione di sistemi OO.
+\subsection{Pattern Controller}
+\textbf{Problema}: quale è il primo oggetto oltre lo strato di UI che riceve e coordina un operazione di sistema (i messaggi)?\\
+\textbf{Soluzione}: assegna la responsabilità ad una classe che rappresenta una delle seguenti scelte:
+\begin{itemize}
+    \item Sistema piccolo: classe che rappresenta il sistema complessivo
+    \item Sistema grande: classe relativa al caso d'uso all'interno del quale si verifica l'evento, solitamente chiamata \texttt{Handler} o \texttt{Controller}
+\end{itemize}
+\section{Design pattern classici}
+\begin{itemize}
+    \item Creazionali: creazione degli oggetti
+    \item Strutturali: composizione di classi
+    \item Comportamentali: come classi (oggetti) interagiscono tra di loro e si distribuiscono le responsabilità
+\end{itemize}
+Un template è piuttosto preciso, noi vedremo la versione semplificata:
+\begin{itemize}
+    \item Nome (una/due parole)
+    \item Problema: descrive quando applicare il pattern e può contenere anche delle precondizioni per poterlo applicare
+    \item Soluzione
+    \item Conseguenze: pro/contro della sua applicazione
+\end{itemize}
+\subsection{I pattern creazionali}
+\customfbox{Sono pattern che hanno a che fare con la creazione di istanze}
+Di solito per risolvere questo problema ci si affida al pattern GRASP Creator, tuttavia esistono casi in cui non conviene applicare il pattern Creator.
+\subsubsection{Factory}
+Quando si vuole separare la logica di creazione dalla logica applicativa pura si ricorre al concetto di Factory in cui viene definito un oggetto specifico Factory con l'unico scopo di creare oggetti.\\
+\textbf{Abstract Factory} fornisce una soluzione per creare famiglie di prodotti in modo che non ci sia necessità da parte dei client di specificare le classi concrete dei prodotti all'interno del proprio codice. E' utile in quanto separa le responsabilità, si produce un design (quindi un codice) migliore.\\
+Conseguenze:
+\begin{center}
+    \begin{tabular}{| p{5cm} | p{12cm} |}
+        \hline
+        \textbf{Pro} & \textbf{Contro} \\
+        \hline
+        Isola le classi concrete & Non è facile aggiungere nuovi prodotti:può richiedere cambiamenti all'interfaccia dell'Abstract Factory e alle sue sottoclassi, richiede l'aggiunta di una nuova classe ConcreteFactory e di nuovi AbstractProducts e Products \\    
+        \hline
+        Rende il cambio della famiglia dei prodotti facile & \\
+        \hline
+        Favorisce  la consistenza tra i vari prodotti di una famiglia & \\
+        \hline
+    \end{tabular}
+\end{center}
+\subsubsection{Adapter}
+Converte l'interfaccia di una classe in un'altra interfaccia che il cliente di aspetta, permette a delle classi di lavorare assieme anche se non potrebbero visto che hanno interfacce incompatibili.
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{Immagini/adapter.png}
+\end{center}
+\textbf{Problema}: usare una classe esistente, la cui interfaccia non è quella che il cliente si aspetta, si vuole creare una classe che collabora con classi non correlate o che non si conoscono ancora.
 \end{document}
