@@ -1159,4 +1159,105 @@ Si possono rappresentare entrambi come rombi, i nodi decisione hanno un input e 
 \subsection{Nodi fork e join}
 I nodi fork e join si possono rappresentare come rettangoli neri, il nodo fork divide un'esecuzione in più flussi concorrenti, il nodo join sincronizza e riunisce i flussi.
 \chapter{UML - Component, Package \& Deployment Diagram}
+\section{Component Diagram}
+\customfbox{Una scatola nera il cui comportamento esterno è completamente definito dalle sue interfacce, sono rimpiazzabili e componibili}
+\subsection{Componente}
+I componenti sono entità logiche che sono realizzate da artfatti (che sono invece entità fisiche).\\
+\textbf{Esempio}:
+\begin{center}
+    \textcolor{blue}{Sottosistema} realizzato tramite un \textbf{insieme di classi}
+\end{center}
+Dove il sottosistema è l'entità logica e l'insieme di classi l'entità fisica.\\
+\textbf{Perchè si usano le componenti per descrivere l'architettura di un sistema SW?}\\
+    Le classi sono componenti di grana troppo fine per dare una buona panoramica del sistema.\\
+Un componente è mostrato come rettangolo con:
+\begin{itemize}
+    \item Parola chiave \texttt{<<component>>} oppure l'icona \includegraphics[height=2\fontcharht\font`\B]{Immagini/componentUML.png}
+    \item Nome
+\end{itemize}
+Esistono parole chiave più specifiche come:
+\begin{itemize}
+    \item \texttt{<<Web service>>}, \texttt{<<Microservice>>}, \texttt{<<Subsystem>>}, \dots
+\end{itemize}
+Se ne possono sempre aggiungere
+\subsection{Interfacce}
+\begin{minipage}
+    {.4\textwidth}
+    Sono composte da:
+    \begin{itemize}
+        \item Lollipop (fornite) \includegraphics[height=2\fontcharht\font`\B]{Immagini/lollipopInterface.png}
+        \item Socket (richieste) \includegraphics[height=2\fontcharht\font`\B]{Immagini/socketInterface.png}
+    \end{itemize}
+\end{minipage}
+\begin{minipage}
+    {.5\textwidth}
+    \begin{center}
+        \includegraphics[width=\textwidth]{Immagini/interface.png}
+    \end{center}
+\end{minipage}
+\subsection{Dipendenza}
+I componenti possono essere connessi anche con la relazione di dipendenza (una freccia tratteggiata con scritto \texttt{<<use>>}), spesso usato quando sono utilizzate più interfacce ma non si vuole specificare quali sono.
+\begin{center}
+    \includegraphics[width=.6\textwidth]{Immagini/dependence.png}
+\end{center}
+Se i un componente c'è scritto \texttt{\{global\}} vuol dire che è usata da tutti i componenti.
+\begin{center}
+    \includegraphics[width=.3\textwidth]{Immagini/global.png}
+\end{center}
+\section{Deployment Diagram}
+\customfbox{E' una vista molto implementativa che mostra la relazione tra hardware e software in un sistema SW. E' presente un forte link tra component e deployment diagram.}
+\subsection{Nodi e connessioni}
+\begin{itemize}
+    \item \textbf{Nodi}: rappresenta un tipo di risorsa computazionale: \begin{itemize}
+        \item \textbf{Periferica fisica} (\texttt{<<device>>})
+        \item \textbf{Ambiente software di esecuzione}
+    \end{itemize}
+\end{itemize}
+Una connessione tra nodi rappresenta un canale di comunicazione attraverso cui possono passare delle informazioni (es. TCP/IP).
+\subsection{Artefatti}
+Sono entità concrete del mondo reale (file di codice sorgente, script, \dots),  possono essere dislocati sui nodi. Esiste anche la relazione di dipendenza tra artefatti.
+\subsection{Manifest}
+La relazione \textbf{manaifest} indica che gli artefatti sono rappresentazioni/manifestazioni fisiche dei componenti.
+\begin{center}
+    \includegraphics[width=.4\textwidth]{Immagini/manifest.png}
+\end{center}
+\section{Package Diagram}
+\customfbox{Descrivono i package e le dipendenze}
+\subsection{Package}
+Un package (in UML) è un costrutto che permette di prendere un numero arbitrario di elementi UML e raggrupparli insieme, può contenere sia elementi che sotto-package.\\
+\textbf{Come suddividere le classi in package?}\\
+Seguendo i principi di buona progettazione:
+\begin{itemize}
+    \item High cohesion and low coupling
+    \item Common Reuse Principle: le classi in un package dovrebbero essere sempre riusate assieme
+    \item Acyclic Dependency Principle: no cicli
+    \item \dots
+\end{itemize}
+\subsubsection{Namespace}
+Ogni package definisce un namespace, lo scopo dei namespace è quello di evitare confusione ed equivoci nel caso siano necessarie molte entità con nomi simili in un progetto SW. Per indicare la classe a cui mi sto riferendo occorre usare un nome completamente qualificato, ad esempio:
+\begin{center}
+    \texttt{System::Data}\\
+    \includegraphics[width=.2\textwidth]{Immagini/package.png}
+\end{center}
+\subsection{Visibilità}
+Gli elementi contenuti in un package possono avere una visibilità che indica se gli elemento sono visibili o meno ai clienti del package:
+\begin{itemize}
+    \item \texttt{+}: pubblico
+    \item \texttt{-}: privato
+\end{itemize}
+\begin{center}
+    \includegraphics[width=.2\textwidth]{Immagini/packagevisibility.png}
+\end{center}
+\newpage
+\subsection{Dipendenze}
+\begin{center}
+    \includegraphics[width=.5\textwidth]{Immagini/packagedipendence.png}
+\end{center}
+In questo caso \texttt{Fish} dipende da \texttt{Water}: vuol dire che nel package \texttt{Fish} esiste \textbf{almeno} una classe che dipende da una classe che è nel package \texttt{Water}. La classe in \texttt{Water} deve essere visibile.
+\subsection{In pratica}
+\begin{itemize}
+    \item Progettare l'applicazione cercando di seguire il più possibile i principi di buona progettazione
+    \item Generare il diagramma dei package a partire dal  codice stesso usando tool specifici di reverse engineering
+    \item Identificare cicli, package poco coesi e package con tante dipendenze entranti per ristrutturare il sistema
+\end{itemize}
 \end{document}
