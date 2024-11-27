@@ -1314,10 +1314,76 @@ Conseguenze:
         \hline
     \end{tabular}
 \end{center}
-\subsubsection{Adapter}
+\section{Adapter}
 Converte l'interfaccia di una classe in un'altra interfaccia che il cliente di aspetta, permette a delle classi di lavorare assieme anche se non potrebbero visto che hanno interfacce incompatibili.
 \begin{center}
     \includegraphics[width=0.5\textwidth]{Immagini/adapter.png}
 \end{center}
 \textbf{Problema}: usare una classe esistente, la cui interfaccia non è quella che il cliente si aspetta, si vuole creare una classe che collabora con classi non correlate o che non si conoscono ancora.
+\section{Façade}
+\textbf{Problema}: rendere più semplice l'accesso a sottosistemi che espongono interfacce complesse, fornire un'unica interfaccia per un insieme di funzionalità "sparse" su più interfacce/classi.\\
+Conseguenze:
+\begin{itemize}
+    \item Promuove un accoppiamento debole fra cliente e sottosistema
+    \item Nascone al cliente le componenti (complesse) del sottosistema
+    \item Il cliente può comunque, se necessario, usare direttamente le classi del sottosistema
+\end{itemize}
+La differenza con l'adapter è che quest'ultimo la converte un'interfaccia mentre il façade la semplifica.
+\section{Template Method}
+Definisce lo scheletro (template) di un algoritmo in un metodo posponendo la definizione di alcuni passi a delle sottoclassi.\\
+\textbf{Problema}: implementare la parte invariante di un algoritmo una sola volta, e lasciare alle sottoclassi l'implementazione delle parti che possono variare.\\
+Le operazioni che costituiscono la parte variabile sono chiamate \textbf{primitive}. Normalmente sono le sottoclassi a chiamare i metodi delle superclassi, con questo pattern è il metodo del template a chiamare i metodi specifici ridefiniti nelle sottoclassi.\\
+Conseguenze:
+\begin{center}
+    \begin{tabular}{| p{5cm} | p{12cm} |}
+        \hline
+        \textbf{Pro} & \textbf{Contro} \\
+        Tecnica fondamentale per il riuso del codice & Importante chiarire bene quali operazioni devono essere ridefinite nelle sottoclassi \\
+        \hline
+        Realizza inversione del flusso di controllo & \\
+        \hline
+        Permette di avere anche più sottoclassi concrete & \\
+        \hline
+    \end{tabular}
+\end{center}
+\section{Observer}
+Gli osservatori sono oggetti che catturano e informano gli altri osservatori di un cambiamento di stato di un oggetto osservato.\\
+Gli osservatori si registrano presso l'oggetto osservato, quando l'oggetto osservato cambia stato (\texttt{cambiato(): boolean}), notifica tutti gli osservatori (\texttt{notify()}) e, quando notificato, ogni osservatore decide cosa fare (niente o \texttt{getState()}).\\
+Definisce una dipendenza allentata (larga) uno a molti tra oggetti, in modo che quando un oggetto cambia stato, tutti gli oggetti che dipendono da lui sono avvertiti.\\
+\textbf{Problema}:
+\begin{itemize}
+    \item Associare più "viste" differenti ad un  modello (dati)
+    \item Implementare il broadcast
+    \item Il cambiamento di un oggetto richiede il cambiamento di altri oggetti
+    \item Notificare oggetti senza fare assunzioni a priori su quali siano questi oggetti
+\end{itemize}
+\subsection{Interfacce}
+L'oggetto osservato deve fornire un'interfaccia standard per la registrazione, deve anche poter notificare  con \texttt{notify()} che chiama tutti gli \texttt{update()} dei registrati  e gli osservatori devono fornire un'interfaccia standard per la notifica \texttt{update()} che a sua volta chiamerà \texttt{getState()} dell'osservato.
+\begin{center}
+    \includegraphics[width=0.5\textwidth]{Immagini/observerinterface.png}
+\end{center}
+\subsection{Conseguenze}
+\begin{center}
+    \begin{tabular}{| c | c |}
+        \hline
+        \textbf{Pro} & \textbf{Contro} \\
+        \hline
+        Supporto per la comunicazione broadcast & Modifiche inaspettate \\
+        \hline
+        Collegamento tra osservato e osservatore modificabile & \\
+        \hline
+    \end{tabular}
+\end{center}
+\section{Model View Controller (MVC)}
+E' un pattern architetturale (quindi avremo una granularità maggiore rispetto ai design pattern) che divide un'applicazione con GUI in tre tipologie di componenti:
+\begin{itemize}
+    \item Un modello: contiene i dati e le funzionalità di base
+    \item Una o più viste: mostrano informazioni agli utenti
+    \item Uno o più controller: gestiscono le richieste degli utenti
+\end{itemize}
+Un'interfaccia utente è formata da una (o più) vista e un (o più) controller.
+\section{State Pattern}
+\textbf{Scopo}: permettere a un oggetto di cambiare il suo comportamento al variare del suo stato interno. Questo permette di implementare le state machine UML.\\
+\textbf{Come?} Si estrae la rappresentazione dello stato in classi esterne organizzate in una gerarchia, si sfrutta il polimorfismo per variare il comportamento.\\
+Però è difficile da comprendere e mantenere (praticamente bisogna aggiungere un \texttt{if} per ogni metodo evento e ovviamente avere tanti \texttt{if} non è buono), un'alternativa è usare lo State Pattern: si usa una gerarchia di classi per rappresentare gli stati della macchina.
 \end{document}
