@@ -1386,4 +1386,97 @@ Un'interfaccia utente è formata da una (o più) vista e un (o più) controller.
 \textbf{Scopo}: permettere a un oggetto di cambiare il suo comportamento al variare del suo stato interno. Questo permette di implementare le state machine UML.\\
 \textbf{Come?} Si estrae la rappresentazione dello stato in classi esterne organizzate in una gerarchia, si sfrutta il polimorfismo per variare il comportamento.\\
 Però è difficile da comprendere e mantenere (praticamente bisogna aggiungere un \texttt{if} per ogni metodo evento e ovviamente avere tanti \texttt{if} non è buono), un'alternativa è usare lo State Pattern: si usa una gerarchia di classi per rappresentare gli stati della macchina.
+\chapter{Code Refactoring}
+\customfbox{
+    Un cambiamento eseguito alla struttura interna di un software per renderla più facile da capire è più economica da modificare senza cambiare il suo comportamento osservabile. \\
+    \textbf{Martin Fowler}
+}
+Refactoring: è una riorganizzazione, ristrutturazione del codice (di solito OO) senza modificarne il comportamento.
+\section{Legacy System}
+Sistemi per i quali l'aattività di manutenzione è diventata prevalente su ogni altra.\\
+\textbf{Problemi}:
+\begin{itemize}
+    \item Sono stati implementati diversi anni fa
+    \item La loro tecnologia è diventata obsoleta
+    \item Sono stati mantenuti per un lungo periodo
+    \item La loro struttura si è deteriorata e non è facile comprendere il codice
+    \item La loro documentazione (se esiste) non è allineata
+    \item Gli autori originali non sono più disponibili
+    \item \textbf{Contengono 'regole di business' che non sono documentate altrove}
+    \item \textbf{Non possono essere sostituiti facilmente}
+    \item \textbf{Rappresentano un grosso investimento per l'azienda}
+\end{itemize}
+\subsection{Convivere con un Legacy System}
+\textbf{Obiettivo}: migliorare la qualità del SW e contenere i costi.\\
+\textbf{Approcci principali}:
+\begin{itemize}
+    \item Redocumentation: processo che mira a produrre una vista del codice 'alternativa' utile per la comprensione
+    \item Restructuring/Refactoring: trasformazione di codice 'mal-strutturato' in codice 'ben-strutturato'
+    \item Reverse Engineering: creazione del design e delle specifiche a partire dal codice, esiste anche la definizione forte che prevede (oltre alla rappresentazione grafica) l'inferire i requisiti/specifiche
+    \item Re-engineering: reverse engineering + modifica di specifiche e design + forward engineering (creazione di un nuovo sistema basato su specifiche e design rivisitati)
+\end{itemize}
+\section{Perchè?}
+\begin{center}
+    \includegraphics[width=.7\textwidth]{Immagini/reasonwhyrefactoring.png}
+\end{center}
+Ma anche:
+\begin{itemize}
+    \item Semplificare la fase di testing
+    \item Limitare design decay/erosion
+\end{itemize}
+\section{Quando?}
+\customfbox{Applicare il refactoring il più spesso possibile durante lo sviluppo}
+\begin{itemize}
+    \item Si vuole aggiungere una nuova funzionalità al sistema
+    \item Quando si corregge un bug
+    \item Quando viene rilevato un \textbf{code smell}
+\end{itemize}
+\subsection{Code Smell}
+Indicatore che qualcosa nel codice non va bene, potrebbe essere solo un qualcosa di \textbf{stile}, oppure che riduce la \textbf{comprensione} del codice oppure nascosto c'è un problema più grave. Spesso i tool che calcolano le metriche del software ci indicano quali sono i code smell presenti.\\
+Esempi:
+\begin{itemize}
+    \item 'Troppo' codice come ad esempio metodi lunghi
+    \item 'Non abbastanza' codice come ad esempio le \texttt{Data class} ovvero classi con solo campi e i metodi getter/setter
+    \item Al di fuori del codice come ad esempio commenti inutili
+\end{itemize}
+\subsection{Clone Software}
+E' codice duplicato e questo può causare 'bug propagation' e problemi di manutenzione.
+\section{Il ritmo}
+\begin{enumerate}
+    \item Trova/identifica code smell
+    \item Modifica (\underline{piccola}) del codice seguendo una procedura definita in modo preciso dal catalogo dei refactorings
+    \item Compila
+    \item Esegui i test
+\end{enumerate}
+Ripeti per ogni code smell trovato nel codice.
+\subsection{Catalogo dei Refactorings}
+Molti refactoring sono "piccoli e semplici" (low-level refactoring) però sono i building-blocks per i refactoring complessi.
+\begin{center}
+    \includegraphics[width=\textwidth]{Immagini/refactoringscatalog.png}
+\end{center}
+\section{Come?}
+\begin{itemize}
+    \item Eseguire manualmente i refactoring
+    \item Utilizzare un tool di supporto
+\end{itemize}
+Chiaramente usare un tool è la soluzione più comoda, tuttavia spesso i tool forniscono solo refactoring semplici. In entrambi i casi è meglio sempre controllare ri-eseguendo i casi di test.
+\subsection{Tools}
+Gli IDE di solito hanno incorporato alcuni refactoring semplici, esistono anche tool o plug-in specifici che suggeriscono refactoring più complessi.
+\subsubsection{Move method}
+Si applica quando le classi hanno 'troppo behaviour' oppure quando abbiamo classi che collaborano troppo o sono troppo accoppiate. E' un refactoring facile, il difficile però è trovare i metodi 'giusti' da spostare, dei buoni candidati sono metodi che sembrano riferirsi più ad altre classi che alla classe a cui appartengono.
+\subsubsection{Replace Temp with Query}
+\textbf{Contesto}: le variabili locali possono essere viste solo nel contesto di un metodo così incoraggiano ad avere metodi lunghi.\\
+\textbf{Soluzione}: rimpiazzando le variabili locali con un metodo query, ogni metodo della classe può ottenere quell'informazione.
+\subsubsection{Replace Paramerer with Method}
+\textbf{Contesto}: metodi che hanno molti parametri sono difficili da capire e la lista dei parametri dovrebbe essere ridotta il più possibile.\\
+\textbf{Soluzione}: se un metodo può ottenere un valore che gli è stato passato allora dovrebbe fare quel calcolo per ottenerlo direttamente al suo interno.
+\subsubsection{Extract Class}
+\textbf{Contesto}: esiste una classe che fa troppo (God class o Blob class)\\
+\textbf{Soluzione}: si crea una nuova classe e si sposta in questa alcuni attributi e operazioni, se non si vuole modificare l'interfaccia lasciamo le operazioni "che delegano" alla nuova classe tutto il lavoro.
+\subsubsection{Replace Inheritance with Delegation}
+Una sottoclasse usa solo parte di una superclasse e non vuole ereditare il resto
+\subsubsection{Replace Conditional with Polymorphism}
+Esiste una condizione che sceglie differenti comportamenti a seconda del tipo/valore di una variabile
+\subsubsection{Separate Domain from Presentation}
+Abbiamo  una GUI che contiene anche la Business Logic, non c'è "separation of concerns"
 \end{document}
