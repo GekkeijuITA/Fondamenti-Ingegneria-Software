@@ -2,8 +2,8 @@ package videostore;
 
 // 1.0
 public class Noleggio {
-    
-	private Film film;
+
+    private Film film;
     private int giorniNoleggio;
 
     public Noleggio(Film film, int giorniNoleggio) {
@@ -17,5 +17,9 @@ public class Noleggio {
 
     public Film getFilm() {
         return film;
+    }
+
+    public double getAmmontare() {
+        return film.prezzo.getAmmontare(giorniNoleggio);
     }
 }

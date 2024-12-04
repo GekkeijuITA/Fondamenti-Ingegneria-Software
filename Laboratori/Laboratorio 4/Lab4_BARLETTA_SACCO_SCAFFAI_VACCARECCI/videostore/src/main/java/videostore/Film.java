@@ -8,22 +8,38 @@ public class Film {
     public static final int NOVITA = 1;
     
     private String titolo;
-    private int codicePrezzo;
+    Prezzo prezzo;
 
     public Film(String titolo, int codicePrezzo) {
         this.titolo = titolo;
-        this.codicePrezzo = codicePrezzo;
+        setCodicePrezzo(codicePrezzo);
     }
 
     public int getCodicePrezzo() {
-        return codicePrezzo;
+        return prezzo.getCodicePrezzo();
     }
 
     public void setCodicePrezzo(int codicePrezzo) {
-        this.codicePrezzo = codicePrezzo;
+        switch (codicePrezzo) {
+            case BAMBINI:
+                prezzo = new PrezzoBambini();
+                break;
+            case REGOLARE:
+                prezzo = new PrezzoRegolare();
+                break;
+            case NOVITA:
+                prezzo = new PrezzoNovita();
+                break;
+            default:
+                throw new IllegalArgumentException("Codice prezzo non valido");
+        }
     }
 
     public String getTitolo() {
         return titolo;
+    }
+
+    public double getAmmontare(int giorniNoleggio) {
+        return prezzo.getAmmontare(giorniNoleggio);
     }
 }
