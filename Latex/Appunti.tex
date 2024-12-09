@@ -1480,5 +1480,113 @@ Esiste una condizione che sceglie differenti comportamenti a seconda del tipo/va
 \subsubsection{Separate Domain from Presentation}
 Abbiamo  una GUI che contiene anche la Business Logic, non c'è "separation of concerns"
 \chapter{Software Testing}
-\section{Introduzione}
+\customfbox{E' una procedura sistematica che prevede l'esecuzione di un sistema software (SUT) con l'intento di trovare \textbf{failure}}
+\begin{itemize}
+    \item \textbf{Errore}: commesso da uno sviluppatore, può essere di battitura o concettuale
+    \item \textbf{Fault}: l'errore presente all'interno del programma
+    \item \textbf{Failure}: manifestazione di una fault durante l'esecuzione
+\end{itemize}
+\section{Debugging}
+\customfbox{Il processo usato per trovare un bug/fault a partire dal failure e rimuoverlo}
+Due fasi:
+\begin{itemize}
+    \item Fault localization/location
+    \item Fault removal
+\end{itemize}
+\section{Testing}
+E' un processo esaustivo e "non realizzabile" nei casi reali perchè occorre selezionare "pochi e buoni" (buoni = con alta probabilità di trovare un fault) input nel dominio di tutti gli input possibili.
+Gli input vengono selezionati secondo l'approccio che si decide di seguire:
+\begin{itemize}
+    \item \textbf{Black box}: non è basato su una conoscenza del SUT e della sua struttura, di solito gli input sono generati a partire dai requisiti/specifiche. Viene chiamato anche \textbf{functional testing}
+    \item \textbf{White box}: è basato su una conoscenza esplicita del SUT e della sua struttura, viene chiamato anche \textbf{structural testing}
+\end{itemize}
+\section{Testcase \& Testsuite}
+\begin{itemize}
+    \item \textbf{Testcase} (caso di test): un insieme di input, precondizioni e risultati attesi sviluppati per un particolare obiettivo come eseguire un particolare percorso del programma o per verificare la conformità di un requisito specifico
+    \item \textbf{Testsuite}: una collezione di testcase
+\end{itemize}
+\section{Tipologie di testing}
+\begin{itemize}
+    \item \textbf{Testing di unità} (Implementazione): l'unità viene testata dallo sviluppatore isolandola il più possibile dal resto, di solito approccio white-box
+    \item \textbf{Testing di integrazione} (Implementazione/Integrazione): i moduli/componenti sono "testati insieme", viene testato come comunicano i moduli/componenti e quali info vengono scambiate. Le interfacce tra moduli di solito sono fonti di errori
+    \item \textbf{Testing di sistema} (Testing di Sistema): il "testing group" verifica che il software soddisfa i requisiti e anche i bisogni dall'utente (acceptance testing), di solito black-box
+    \item \textbf{Testing di regressione} (Manutenzione): tutte le volte che si effettua una modifica in un applicazione c'è il rischio di side effect in zone del codice che apparentemente non sembrerebbero impattate dalla modifica, lo scopo del test di regressione è verificare che non ci siano state delle regressioni (side effect/peggioramenti)
+\end{itemize}
+\section{Testing manuale VS Testing automatizzato}
+Nel testing automatizzato i tester implementano dei test script (porzioni di codice in grado di interagire con il SUT, per esempio inserendo input) che sono eseguiti da un framework che dopo la loro esecuzione riporta il risultato (pass/fail).
+\subsection{JUnit}
+E' un framework di testing per programmi Java che ci permette di realizzare il test automatizzato. Sviluppato da: Erich Gamma e Kent Beck.
+\section{White-box Testing}
+\subsection{Code coverage}
+Di solito la qualità di una testsuite $T$ si valuta misurando la copertura di $T$ rispetto al programma $P$. Ad esempio il numero di linee di codice eseguite durante la fase di testing sul totale di linee di codice. La coverage può essere basata sul codice sorgente o su modelli generati a partire dal codice (es. grafo di flusso di controllo, state machines, data flow graph, \dots) o requisiti e specifiche.
+\subsubsection{Control Flow Graph (CFG)}
+Rappresenta mediante un diagramma di flusso tutti i possibili cammini che possono essere attraversati durante l'esecuzione di $P$. \textbf{Esistono diverse rappresentazione (e numerazioni) equivalenti di CFG}.
+\begin{itemize}
+    \item Statement (node) coverage: coprire tutti i nodi del CFG
+    \item Branch coverage: coprire tutti i branch anche chiamato decision coverage, è la copertura minima richiesta da "IEEE unit test standard"
+    \item Multiple Condition Coverage (MCC): copre tutte le combinazioni possibili delle condizioni nei nodi decisionali
+    \item All Paths Coverage: copertura di tutti i cammini del CFG in pratica è impossibile (ci sono i loop)
+\end{itemize}
+\subsubsection{In pratica}
+\begin{enumerate}
+    \item Si sceglie un criterio: \begin{itemize}
+        \item Seguendo gli standard o le prescrizioni aziendali (di solito branch coverage)
+        \item Considerando che, in generale: \begin{itemize}
+            \item più è la power (livello di difficoltà di implementazione) più è complesso trovare i casi di test
+            \item più è la power più aumenta la dimensione della testsuite
+            \item più è la power più aumentano i costi e i tempi di esecuzione
+            \item più è la power più è probabile che la testsuite riveli dei fault
+        \end{itemize}
+    \end{itemize}
+    \item Si sceglie una copertura
+    \item Si crea una testsuite seguendo il criterio scelto con tanti casi di test al fine di raggiungere la copertura voluta...
+\end{enumerate}
+\subsubsection{Statement Coverage}
+\textbf{Criterio}: tutti gli statement devono essere coperti durante l'esecuzione della testsuite.\\
+E' il criterio più debole di copertura.\\
+\textbf{Procedura}: \begin{enumerate}
+    \item Selezionare alcuni path che coprono tutti gli statement
+    \item Scegliere gli input in modo da percorrere i path selezionati
+\end{enumerate}
+\subsubsection{Branch Coverage}
+\textbf{Criterio}: tutti i branch devono essere coperti durante l'esecuzione della testsuite.\\
+I branch \texttt{true} e \texttt{false} degli if statement, ogni \texttt{case} in uno statement \texttt{switch} e ogni loop.\\
+\textbf{Procedura}: \begin{enumerate}
+    \item Selezionare alcuni path che coprono tutti i branch
+    \item Scegliere gli input in modo da percorrere i path selezionati
+\end{enumerate}
+\subsubsection{Multiple Condition Coverage}
+\textbf{Criterio}: ogni condizione atomica deve essere coperta (occorrono degli input che la rendono true e false), in una condizione composta ogni combinazione delle condizioni atomiche deve essere coperta durante l'esecuzione dei casi di test.
+\subsubsection{All Paths Coverage}
+\textbf{Criterio}: tutti i cammini del CFG devono essere coperti
+\customfbox{Non applicabile!}
+\textbf{Problemi}
+\begin{itemize}
+    \item Non usabile in pratica quando ci sono dei loop (troppi cammini), di solito si semplifica trattando i loop in modo binario: viene eseguito o no
+    \item Alcuni cammini potrebbero essere \textbf{infeasible}, potrebbe essere che non esiste una combinazione di input che ci permetta di scegliere un particolare path, questa cosa è vera anche per gli altri criteri ma è molto più complicato
+\end{itemize}
+\subsection{Limiti}
+Spesso il numero di casi di test prodotti è molto grande, per questo motivo è spesso usato solo per Unit testing per piccole porzioni del sistema (Testing in the small) e non è in grado di rivelare i fallimenti dovuti a "missing feature errors" (possono essere scoperti solo considerando i requisiti/specifiche)
+\section{Black-box Testing}
+Il black box testing può essere usato con qualsiasi tipo di sistema indipendentemente dalla tecnologia/piattaforma/linguaggio usato, può essere usato per Unit, Integration e System testing (usato soprattutto per System testing). Gli sviluppatori possono scrivere casi di test non appena i requisiti del sistema sono disponibili cioè prima che il codice venga scritto.
+\subsection{Equivalence Partitioning}
+\begin{enumerate}
+    \item Partizionamento dei dati di input
+    \item L'input domain è suddiviso in classi tale che il risultato risulta essere una partizione
+    \item Le classi sono create assumendo che il SUT esibirà lo stesso behaviour su tutti gli elementi della classe
+    \item A questo punto si sceglie un input per ogni classe e si testa il programma (l'input scelto è rappresentativo della classe)
+\end{enumerate}
+Di solito il primo passo è quello di dividere l'input domain in due classi:
+\begin{itemize}
+    \item Input legali
+    \item Input illegali
+\end{itemize}
+A loro volta queste classi possono ancora essere suddivise.
+\section{Boundary Value Analysis (BVA)}
+Si scelgono i casi di test in prossimità della frontiera (confini) delle varie classi di equivalenza (si applica dopo Equivalence Partitioning). Si basa sul seguente assunto: è più probabile commettere errori vicino alla frontiera che non all'interno delle classi.
+\begin{enumerate}
+    \item Partizionare l'input domain (Equivalence Partitioning)
+    \item Identificare i confini per ogni partizione
+    \item Selezionare gli input in modo tale da comprendere i confini (e i punti vicini)
+\end{enumerate}
 \end{document}
