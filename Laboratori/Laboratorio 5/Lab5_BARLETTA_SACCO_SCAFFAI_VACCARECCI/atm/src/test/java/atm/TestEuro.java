@@ -2,7 +2,6 @@ package atm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +19,28 @@ class TestEuro {
 
     @Test
     void testSum() {
-        fail("Not yet implemented");
+        Euro sum = euro1.sum(euro2);
+        assertEquals(630.5, sum.getValue());
     }
 
-    //TODO: complete the class
-   
+    @Test
+    void testSubtract() {
+        Euro subtract = euro1.subtract(euro2);
+        assertEquals(430.5, subtract.getValue());
+    }
+
+    @Test
+    void testEqualTo() {
+        assertTrue(euro1.equalTo(new Euro(530.5)));
+    }
+
+    @Test
+    void testLessThan() {
+        assertTrue(euro2.lessThan(euro1));
+    }
+
+    @Test
+    void testPrint() {
+        assertEquals("530.5 euro", euro1.print());
+    }
 }

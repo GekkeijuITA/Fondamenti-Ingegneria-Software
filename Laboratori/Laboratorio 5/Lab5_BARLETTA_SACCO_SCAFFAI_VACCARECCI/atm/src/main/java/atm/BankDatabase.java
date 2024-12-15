@@ -34,12 +34,12 @@ public class BankDatabase
    }
 
    // return available balance of Account with specified account number
-   public double getAvailableBalance(int userAccountNumber) {
+   public Euro getAvailableBalance(int userAccountNumber) {
       return getAccount(userAccountNumber).getAvailableBalance();
    }
 
    // return total balance of Account with specified account number
-   public double getTotalBalance(int userAccountNumber) {
+   public Euro getTotalBalance(int userAccountNumber) {
       return getAccount(userAccountNumber).getTotalBalance();
    }
 
