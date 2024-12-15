@@ -1589,4 +1589,79 @@ Si scelgono i casi di test in prossimità della frontiera (confini) delle varie 
     \item Identificare i confini per ogni partizione
     \item Selezionare gli input in modo tale da comprendere i confini (e i punti vicini)
 \end{enumerate}
+\chapter{Metodi Agili: Extreme Programming}
+\section{Critiche ai metodi plan-driven}
+In precedenza abbiamo parlato dei metodi plan-driven, però questi metodi non sono adatti per l'internet economy perchè richiede flessibilità e velocità di rispondere ai cambiamenti e lunghi cicli di sviluppo e tanta pianificazione non aiutano.
+\section{Agile Manifesto}
+\customfbox{\textit{Kent Beck, Alistair Cockburn, Ward Cunningham, Martin Fowler, Ron Jeffries e Rober C. Martin}}
+Sono i nomi (più importanti) che hanno contribuito alla stesura dell'Agile Manifesto. I principi su cui si basa una metodologia agile che segue i punti indicati dall'Agile Manifesto sono:
+\begin{center}
+    \includegraphics[width=.5\textwidth]{Immagini/agilemanifesto.png}
+\end{center}
+\section{Extreme Programming (XP)}
+\subsection{Cosa è}
+XP è un processo di sviluppo per software OO ideato per piccoli gruppi (4-20) che cerca di mantenersi agile e flessibile. Non usa linguaggi di analisi o design (UML), ma dalla raccolta dei requisiti eseguita con le \textbf{User Stories}, passa velocemente alla codifica.\\
+XP è stata ideata nel 1999/2000 da Kkent Beck, Ward Cunningham e Ron Jeffries e messo in pratica durante il procgetto C3 (Chrysler Comprehensive Compensation System).\\
+XP prevede frequenti rilasci di codice funzionante ogni 1-4 settimane invece di un rilascio unico.
+\subsection{Requisiti}
+I requisiti sono raccolti avendo a disposizione il cliente (\textbf{On-site Customer}) per tutta la durata del progetto, tramite le User Stories. Una User Story è un sintetico caso d'uso che viene scritto in linguaggio naturale. 
+\subsection{Come si produce il desing?}
+\begin{itemize}
+    \item Metodo CRC (Class Responsibility Collaboration): si usano foglietti adesivi su cui vengono scritti il nome della classe, le responsabilità e le collaborazioni con le altre classi
+    \item Quick design session: non si usano tool per il design e nemmeno linguaggi tipo UML, solo in casi particolari si usano degli sketch di Class Diagram (per esempio)
+\end{itemize}
+I documenti  di design (i diagrammi) non vengono conservati, questi sono incorporati nel software e facilmente desumibili. Per avere sempre ben chiaro il design è importante che il codice sia il più possibile autodocumentato e chiaro possibile (meaningful code), questo non si ottiene con i commenti ma tramire il refactoring e assegnando alle variabili nomi significativi.
+\subsection{Principi di codifica}
+\begin{itemize}
+    \item Non si pianifica per il riuso: simple code and simple design (principio KISS)
+    \item "Think by example": si inizia con un esempio concreto, si scrive un algoritmo ad hoc e poi si generalizza e si cercano i casi particolari
+    \item Il codice è in comune: chiunque può modificare il codice scritto da altri (collective code ownership)
+    \item Tutti  i programmatori devono attenersi alle stesse "code conventions"
+\end{itemize}
+\subsection{Pair Programming}
+I programmatori lavorano a coppie: uno digita il codice e l'altro osserva e commenta, solitamente il meno esperto scrive il codice. I punti di forza del Pair Programming sono:
+\begin{itemize}
+    \item Revisione del codice continua
+    \item Training
+    \item Ogni modulo è conosciuto in dettaglio da almeno due persone
+\end{itemize}
+\subsection{Unit Testing}
+\begin{itemize}
+    \item Per ogni classe sono scritti dei casi di test per verificarne il funzionamento
+    \item Si usando tool/framework specifici (es. JUnit)
+    \item Ad ogni modifica della classe tutti i casi di test sono eseguiti e devono essere tutti superati
+    \item I casi di test sono progettati prima del codice stesso perchè aiutano nello sviluppo
+\end{itemize}
+\subsection{Refactoring}
+\begin{itemize}
+    \item Per mantenere il codice semplice e meaningful occorre ristrutturarlo spesso
+    \item Appena il codice supera i casi di test di unità si applica il refactoring
+    \item Once and Only Once: se due segmenti di codice fanno la stessa cosa (cloni), devono essere unificati in un unico modulo
+    \item La ristrutturazione continua è possibile perchè si dispone dei casi di testi di unità
+\end{itemize}
+\subsection{Acceptance Testing}
+Sono previsti dei test funzionali di accettazione basati sulle User Stories e concordati con il cliente: verificano che la user story è stata implementata correttamente.\\
+La percentuale di test di accettazione superati è un indice del progresso nella codifica del sistema.
+\section{Problemi dei metodi agili}
+\begin{itemize}
+    \item Gestionali: la conoscenta è nella testa degli sviluppatori, si addice solo a sviluppatori molto bravi e di fatto gli customer on-site potrebbero non essere sempre disponibili 
+    \item Contrattuali/Legali: quando è soddisfatto il contratto? Di fatto non esiste\dots
+    \item Manutenzione: documentazione scarsa, architettura spesso complessa determinata dalla release attuale
+\end{itemize}
+\section{Metodi Plan-Driven VS Metodi Agili}
+\begin{center}
+    \begin{tabular}{| p{8cm} | p{7cm} |}
+        \hline
+        \textbf{Metodi Plan-Driven} & \textbf{Metodi Agili} \\
+        \hline
+        Sistemi grandi e complessi, safety-critical o con forti richieste di affidabilità & Sistemi e team piccoli, clienti e utenti disponibili \\
+        \hline
+        Requisiti stabili e ambiente predicibile & Requisiti volatili e ambiente instabile \\
+        \hline
+        & Team con molta esperienza \\
+        \hline
+        & Tempi di consegna rapidi \\
+        \hline
+    \end{tabular}
+\end{center}
 \end{document}
